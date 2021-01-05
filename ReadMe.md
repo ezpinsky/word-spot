@@ -21,20 +21,28 @@
 
 ### 4. Highscores
 
-- list of all users scores
+- HighScores for letterBoards
+- Show friends scores
 
 ### 5. User Generated LetterBoards
 
-- Enter 16 letters to create new board
+- User creates new board with custom letters
+- Graph search algorithm generates board orientation with most words
 
 ### 6. Music and Sound Effects
 
 - Background music
 - Gameplay sound effects
 
+---
+
+  <br />
+
 ## Bonus Features
 
 ### 1. Hints
+
+- Give antonym, synonyms, or definition
 
 ### 2. Two Player Game Mode
 
@@ -45,55 +53,161 @@
 - Choose from 9 letters to pick a word
 - Shuffle feature
 
-## Feature List
+---
 
-1. Users
+  <br />
 
-- Create
-- Read
-- Update
+## Database Schema
 
-2. Friends
+### 1. User
 
-- Create
-- Read
-- Delete
+- id
+- username
+- email
+- hashedPass
 
-3. Game
+### 2. FriendsList
 
-- Create
-- Read
-- Update
-- Delete
+- id
+- userId
+- friendsUsernames
 
-4. Highscores
+### 3. LetterBoard
 
-- Create
-- Read
-- Update
+- id
+- userId
+- letters
+- words
+- hints
 
-5. LetterGroup
+### 4. Score
 
-- Create
-  > User created LetterGroup
-- Read
+- id
+- userId
+- letterBoardId
+- score
+- date
 
-### Components
+### 5. Challenges
 
-1. user
+- id
+- letterBoardId
+- challengerId
+- challengedId
+- challengerScore
+- ChallengedScore
 
-   > - Create
-   > - Read
-   > - Update
+---
 
-2.
+  <br />
 
-### ReadMe
+## Backend Routes
 
-MVP
-Bonus Features
-Database models list/or diagram
-Backend routes
-React Components (navBar, footer)
-Wireframe to show components
-list of tech requirements (flask, react, dictionary)
+### 1. Sessions
+
+- POST /api/session -- Login user
+- DELETE /api/session -- Logout user
+
+### 2. Users
+
+- POST /api/users/ -- Account creation
+- GET /api/users/:userId -- Get account info and friends list
+- PATCH /api/users/:userId -- Edit user info
+- DELETE /api/users/:userId/:letterBoardId -- Deletes userId for a letterBoard
+
+### 3. LetterBoards
+
+- POST /api/letterBoards -- Creates user generated letterBoard
+- GET /api/letterBoards/:letterBoardId - Get letterBoard info
+
+### 4. Scores
+
+- POST /api/scores/:letterBoardId/:userId -- Posts score for user
+- GET /api/scores/:letterBoardId -- Gets scores for letterBoard
+
+### 5. Challenges
+
+- POST /api/challenges/ -- Creates a challenge
+- GET /api/challenges/:userId -- Gets all challenges
+- DELETE /api/challenges/:challengeId -- Deletes a challenge
+
+---
+
+  <br />
+
+## Components
+
+### 1. SignUp
+
+### 2. Login
+
+### 3. Game
+
+### 4. LetterBoard
+
+### 5. LetterBoardColumn
+
+### 6. Letter
+
+### 7. Timer
+
+### 8. Settings
+
+- Music
+- SoundEffects
+- Timed
+- User Info Edit
+
+### 9. FriendsList
+
+### 10. Footer
+
+### 11. SideBar
+
+- Highscores
+- Friends Highscores
+
+---
+
+  <br />
+
+## Wireframe
+
+### 1. Signup
+
+  <br />
+
+![Signup](Signup.png)
+
+### 2. Login
+
+  <br />
+
+![Login](Login.png)
+
+### 3. Game Interface
+
+  <br />
+
+![Login](Game-Interface.png)
+
+  <br />
+
+## Tech Requirements
+
+- alembic
+- email-validator
+- Flask
+- Flask-WTF
+- Flask Cors
+- Flask-Login
+- Flask-Migrate
+- Flask-SQLAlchemy
+- pyscopg2-binary
+- python-dateutil
+- python-dotenv
+- React
+- React-router-dom
+- SQLAlchemy
+- [PyEnchant](http://pyenchant.github.io/pyenchant/) (for spellcheck)
+- [PyDictionary](https://pypi.org/project/PyDictionary/) (for word hints)
