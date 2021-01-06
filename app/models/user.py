@@ -7,10 +7,10 @@ class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
   id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(18) nullable=False, unique=True)
+  username = db.Column(db.String(18), nullable=False, unique=True)
   email = db.Column(db.String(255), nullable=False, unique=True)
   hashedPassword = db.Column(db.String(255), nullable=False)
-  lastLoggedIn = db.Column(db.DateTime nullable=False)
+  lastLoggedIn = db.Column(db.DateTime, nullable=False)
 
   @property  # use this decorator for getters and setters
   def password(self):
