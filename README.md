@@ -14,7 +14,7 @@
 
 ### 3. LetterBoards
 
-- Connect letters to spot a word
+- Connect letters together to find a word
 - Score Counter
 - Timer
 - Settings
@@ -65,6 +65,7 @@
 - username
 - email
 - hashedPass
+- lastLoggedInDate
 
 ### 2. FriendsList
 
@@ -91,11 +92,12 @@
 ### 5. Challenges
 
 - id
+- createdDate
+- updatedDate
 - letterBoardId
-- challengerId
-- challengedId
-- challengerScore
-- ChallengedScore
+- challengeSenderId
+- challengedUserId
+- accepted
 
 ---
 
@@ -164,8 +166,20 @@
 
 ### 11. SideBar
 
-- Highscores
-- Friends Highscores
+1. Highscores
+
+> - World highscores
+> - Friends highscores
+
+2. Friends
+
+> - Friends list
+> - Add a friend
+
+3. Challenges
+
+> - Sent challenges
+> - Received challenges
 
 ---
 
@@ -176,31 +190,32 @@
 ### 1. Signup
 
   <br />
-
-![Signup](Signup.png)
+<img src='./readme-images/Signup.png'/>
 
 ### 2. Login
 
   <br />
 
-![Login](Login.png)
+<img src='./readme-images/Login.png'/>
 
 ### 3. Game Interface
 
   <br />
 
-![Login](Game-Interface.png)
+<img src='./readme-images/Game-Interface.png'/>
 
   <br />
 
 ## Tech Requirements
 
 - alembic
+- [chakra-ui](https://chakra-ui.com/) (for drawer and form components)
 - email-validator
+- datetime (for updating datetime column in db)
 - Flask
 - Flask-WTF
 - Flask Cors
-- Flask-Login
+- [Flask-Login](https://flask-login.readthedocs.io/en/) (for user authentication)
 - Flask-Migrate
 - Flask-SQLAlchemy
 - pyscopg2-binary
@@ -211,3 +226,4 @@
 - SQLAlchemy
 - [PyEnchant](http://pyenchant.github.io/pyenchant/) (for spellcheck)
 - [PyDictionary](https://pypi.org/project/PyDictionary/) (for word hints)
+- [werkzeug](https://werkzeug.palletsprojects.com/en/1.0.x/) (for password security)
