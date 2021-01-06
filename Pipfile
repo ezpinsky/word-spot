@@ -10,6 +10,7 @@ flask-wtf = "*"
 flask-login = "*"
 flask-cors = "*"
 flask-sqlalchemy = "*"
+python-dotenv = "*"
 
 [dev-packages]
 psycopg2-binary = "*"
