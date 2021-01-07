@@ -67,11 +67,11 @@
 - hashedPass
 - lastLoggedInDate
 
-### 2. FriendsList
+### 2. Friends
 
 - id
 - userId
-- friendsUsernames
+- friends
 
 ### 3. LetterBoard
 
