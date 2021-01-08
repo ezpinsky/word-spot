@@ -4,7 +4,6 @@ from datetime import datetime
 
 
 def seed_users():
-  demo = User(username='demoWord', email='demo@email.com', password='password', lastLoggedIn=datetime.now())
   seedUser1 = User(username='fiteMachine', email='bently@gmail.com', password='password', lastLoggedIn=datetime.now())
   seedUser2 = User(username='ablindoldman', email='hanson@gmail.com', password='password', lastLoggedIn=datetime.now())
   seedUser3 = User(username='heylookanalien', email='gabe@gmail.com', password='password', lastLoggedIn=datetime.now())
@@ -12,10 +11,13 @@ def seed_users():
   seedUser5 = User(username='thelilassasin', email='ezzy@gmail.com', password='password', lastLoggedIn=datetime.now())
   seedUser6 = User(username='fredtheplant', email='ez@gmail.com', password='password', lastLoggedIn=datetime.now())
   seedUser7 = User(username='wakeboarderfeik', email='sam@gmail.com', password='password', lastLoggedIn=datetime.now())
-  seedUser8 = User(username='madbrad420', email='brad@gmail.com', password='password', lastLoggedIn=datetime.now())
+  seedUser8 = User(username='madbrad420', email='brad@aol.com', password='password', lastLoggedIn=datetime.now())
   seedUser9 = User(username='locojamesslick', email='jamesr@gmail.com', password='password', lastLoggedIn=datetime.now())
   seedUser10 = User(username='zegreenmachine45', email='peter@gmail.com', password='password', lastLoggedIn=datetime.now())
   seedUser11 = User(username='holy_hoglet1', email='nick@gmail.com', password='password', lastLoggedIn=datetime.now())
+  demo = User(username='demoWord', email='demo@email.com', password='password', lastLoggedIn=datetime.now(), friendList=[seedUser1, seedUser2, seedUser3, seedUser4])
+
+  # demo.friendList.append(seedUser1)
 
   db.session.add(demo)
   db.session.add(seedUser1)
