@@ -1,4 +1,5 @@
 # WordSpot
+WordSpot is a fast-paced word-finding game similar to boggle. Find as many words as you can by connecting adjacent letters in 4 x 4 grid before the clock runs out. See if you can beat your friend’s highscore!
 
 ## MVP
 
