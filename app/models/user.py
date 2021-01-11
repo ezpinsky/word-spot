@@ -5,6 +5,13 @@ from sqlalchemy.orm import relationship
 from alembic import op
 from datetime import datetime
 
+friends = db.Table('friends',
+                   db.Model.metadata,
+                   db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+                   db.Column('friend_id', db.Integer, db.ForeignKey('users.id'))
+                   )
+
+
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
@@ -14,7 +21,14 @@ class User(db.Model, UserMixin):
   hashedPassword = db.Column(db.String(255), nullable=False)
   lastLoggedIn = db.Column(db.DateTime, nullable=False)
 
-  friendList = relationship('FriendList')
+  friendList = db.relationship('User', secondary='friends', primaryjoin=id == friends.c.friend_id, secondaryjoin=id == friends.c.user_id, backref='friends')
+  letterGrids = relationship('LetterGrid')
+
+  def to_dict_friendList(self):
+    return {friends: [User.query.filter(User.id == friend_id).first().to_dict()
+                      for friend_id in self.friendList
+                      ]
+            }
 
 
   @property  # use this decorator for getters and setters

@@ -1,7 +1,7 @@
-"""empty message
+"""User Table
 
 Revision ID: 9609b17c00fd
-Revises: 
+Revises:
 Create Date: 2021-01-07 15:08:58.380863
 
 """

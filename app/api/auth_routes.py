@@ -23,7 +23,7 @@ def authenticate():
 
 
 # Log user in
-@auth_routes.route('/login', methods=['POST'])
+@auth_routes.route('/login/', methods=['POST'])
 def login():
   form = LoginForm()
   print("this is the request.json():", request.get_json())
@@ -40,14 +40,14 @@ def login():
 
 
 #log user out
-@auth_routes.route('/logout')
+@auth_routes.route('/logout/')
 def logout():
   logout_user()
   return {'message': 'User logged out'}
 
 
 #  Creates a new user and logs them in
-@auth_routes.route('/signup', methods=['POST'])
+@auth_routes.route('/signup/', methods=['POST'])
 def sign_up():
   form = SignUpForm()
   form['csrf_token'].data = request.cookies['csrf_token']
@@ -63,6 +63,6 @@ def sign_up():
   return {'errors': validation_errors_to_error_messages(form.errors)}
 
 # Returns unauthorized JSON when flask-login authentication fails
-@auth_routes.route('/unauthorized')
+@auth_routes.route('/unauthorized/')
 def unauthorized():
   return {'errors': ['Unauthorized']}, 401

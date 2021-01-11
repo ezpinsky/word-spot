@@ -42,7 +42,7 @@
 
 ### 1. Hints
 
-- Give antonym, synonyms, or definition
+- Give antonym, synonyms, or definition in front-end
 
 ### 2. Two Player Game Mode
 
@@ -64,28 +64,27 @@
 - id
 - username
 - email
-- hashedPass
+- hashedPassword
 - lastLoggedInDate
 
 ### 2. Friends
 
 - id
 - userId
-- friends
+- friendIds
 
-### 3. LetterBoard
+### 3. LetterGrid
 
 - id
 - userId
 - letters
 - words
-- hints
 
 ### 4. Score
 
 - id
 - userId
-- letterBoardId
+- letterGridId
 - score
 - date
 
