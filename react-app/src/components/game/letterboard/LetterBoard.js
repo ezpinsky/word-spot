@@ -1,6 +1,77 @@
 import './letterboard.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function LetterBoard() {
-	return <div></div>;
+	const [boardLetters, setBoardLetters] = useState(['aaao', 'bbcb', 'cccc', 'dddd']);
+	const [loaded, setLoaded] = useState(false);
+	const [selectedLetters, setSelectedLetters] = useState([]);
+	let selectedStyle;
+	const isValidMove = letterLocation => {
+		if (!selectedLetters.length) {
+		} // if no selected letters make any move valid
+
+		if (!selectedLetters.indexOf(letterLocation)) return false;
+		let lastMove = selectedLetters.pop();
+		let startX;
+		let startY;
+		lastMove[0] ? (startX = lastMove[0] - 1) : (startX = lastMove[0]);
+		lastMove[1] ? (startY = lastMove[1] - 1) : (startY = lastMove[1]);
+
+		let validMoves = [];
+		for (let x = startX; x < 4; x + 1) {}
+	};
+
+	// for nx in range(max(0, x - 1), min(x + 2, 4)):
+	//     for ny in range(max(0, y - 1), min(y + 2, 4)):
+
+	const handleLetterClick = e => {
+		// if (isValidMove(e.target.getAttribute('location'))) {
+		// 	setSelectedLetters(setSelectedLetters.push(e.target.key));
+		// 	e.target.className = 'letter selectedLetter';
+		// } else {
+		// }
+
+		console.log(e.target.getAttribute('value'));
+		console.log(e.target.getAttribute('location'));
+		e.target.classList.add('selectedLetter');
+	};
+
+	if (!loaded) {
+		setBoardLetters(
+			boardLetters.map((row, rowNum) => {
+				return (
+					<div key={`row${rowNum}`} className='gridRow'>
+						{row.split('').map((letter, colNum) => {
+							return (
+								<div
+									location={[colNum, rowNum]}
+									key={[colNum, rowNum]}
+									className='letter'
+									value={letter}
+									onClick={handleLetterClick}
+									styles={selectedStyle}
+								>
+									<div value={letter} location={[colNum, rowNum]} key={[colNum, rowNum, 'letter']}>
+										{letter.toUpperCase()}
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				);
+			})
+		);
+		setLoaded(true);
+	}
+	// useEffect(() => {}, [boardLetters]);
+
+	return (
+		<>
+			{loaded && (
+				<div id='letterGridContainer'>
+					<div id='letterGrid'>{boardLetters}</div>
+				</div>
+			)}
+		</>
+	);
 }

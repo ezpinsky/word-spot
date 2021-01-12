@@ -44,7 +44,6 @@ function App() {
 					<User />
 				</ProtectedRoute>
 				<ProtectedRoute path='/' exact={true} authenticated={authenticated}>
-					<h1>Word Spot</h1>
 					<Game />
 				</ProtectedRoute>
 			</Switch>
