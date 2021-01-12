@@ -7,6 +7,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/game/UsersList';
 import User from './components/game/User';
 import { authenticate } from './services/auth';
+import Game from './components/game/Game';
 
 function App() {
 	const [authenticated, setAuthenticated] = useState(false);
@@ -43,7 +44,8 @@ function App() {
 					<User />
 				</ProtectedRoute>
 				<ProtectedRoute path='/' exact={true} authenticated={authenticated}>
-					<h1>My Home Page</h1>
+					<h1>Word Spot</h1>
+					<Game />
 				</ProtectedRoute>
 			</Switch>
 		</BrowserRouter>
