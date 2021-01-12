@@ -5,6 +5,12 @@ from collections import deque
 import time
 
 
+'''
+create a single algo that finds all words for a given grid
+change out all 4s in the algo for an ncols variable and for the maxtrixise change out the 5 for ncols + 1
+
+'''
+
 my_global_var = ''
 # enumerate essentially takes an iterable and creates an enumerate object which can be converted to list of tuples with the value of the iterable and the index/count of iteration
 def find_words(grid, words, prefixes):
