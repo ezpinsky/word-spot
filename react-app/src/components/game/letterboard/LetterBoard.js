@@ -6,23 +6,35 @@ export default function LetterBoard() {
 	const [loaded, setLoaded] = useState(false);
 	const [selectedLetters, setSelectedLetters] = useState([]);
 	let selectedStyle;
-	const isValidMove = letterLocation => {
-		if (!selectedLetters.length) {
-		} // if no selected letters make any move valid
 
-		if (!selectedLetters.indexOf(letterLocation)) return false;
-		let lastMove = selectedLetters.pop();
-		let startX;
-		let startY;
-		lastMove[0] ? (startX = lastMove[0] - 1) : (startX = lastMove[0]);
-		lastMove[1] ? (startY = lastMove[1] - 1) : (startY = lastMove[1]);
-
-		let validMoves = [];
-		for (let x = startX; x < 4; x + 1) {}
+	const isValidMove = newMove => {
+		if (!selectedLetters.length) return true;
+		if (!JSON.stringify(selectedLetters).indexOf(JSON.stringify(newMove))) return false;
+		const lastMove = selectedLetters[selectedLetters.length - 1];
+		const startX = Math.max(0, lastMove[0] - 1);
+		const endX = Math.min(lastMove[0] + 2, 4);
+		const startY = Math.max(0, lastMove[1] - 1);
+		const endY = Math.min(lastMove[1] + 2, 4);
+		const validMoves = [];
+		for (let x = startX; x < endX; x++) {
+			for (let y = startY; y < endY; y++) {
+				// this if statement gets around javascript drawback where two objects can only be equal if they point to same object in memory
+				if (!(lastMove[0] === x && lastMove[1] === y)) {
+					validMoves.push([x, y]);
+				}
+			}
+		}
+		console.log('selectedLetters are: ', selectedLetters.join(''));
+		console.log('valid moves are: ', validMoves);
+		console.log('json thing', JSON.stringify(validMoves).indexOf(JSON.stringify([1, 1])));
+		// this is another way to get around javascript drawback where two objects can only be equal if they point to same object in memory
+		console.log(JSON.stringify(validMoves).indexOf(JSON.stringify(newMove)));
+		if (JSON.stringify(validMoves).indexOf(JSON.stringify(newMove)) > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	};
-
-	// for nx in range(max(0, x - 1), min(x + 2, 4)):
-	//     for ny in range(max(0, y - 1), min(y + 2, 4)):
 
 	// sudo code for algo to determine where to put a line connecting lines
 	// e.target.getBoundingClientRect())
@@ -33,15 +45,18 @@ export default function LetterBoard() {
 	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
 	const handleLetterClick = e => {
-		// if (isValidMove(e.target.getAttribute('location'))) {
-		// 	setSelectedLetters(setSelectedLetters.push(e.target.key));
-		// 	e.target.className = 'letter selectedLetter';
-		// } else {
-		// }
+		const newMove = e.target
+			.getAttribute('location')
+			.split(',')
+			.map(strNum => parseInt(strNum, 10));
+		if (isValidMove(newMove)) {
+			setSelectedLetters(selectedLetters.push(newMove));
+			e.target.classList.add('selectedLetter');
+		} else {
+			return;
+		}
 
 		console.log(e.target.getAttribute('value'));
-		console.log(e.target.getAttribute('location'));
-		e.target.classList.add('selectedLetter');
 		console.log(e.target.getBoundingClientRect());
 	};
 

@@ -4,7 +4,7 @@
 }
 
 #letterGrid {
-	width: 750px;
+	min-width: 750px;
 	height: 750px;
 	display: flex;
 	flex-direction: column;
@@ -26,7 +26,7 @@
 .letterContainer {
 	width: 150px;
 	height: 150px;
-	border: 5px solid burlywood;
+	border: 7px solid burlywood;
 	border-radius: 15px;
 	background-image: url('../../../images/letterBackground.jpg');
 	background-position: center;
@@ -38,22 +38,23 @@
 }
 
 .letterContainer:hover {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .letterContainer:active {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	border: 5px solid rgb(136, 110, 75);
 }
 
 .selectedLetter {
-	border: 5px solid rgb(136, 110, 75);
+	border: 7px solid rgb(136, 110, 75);
 	border-radius: 15px;
 }
 
 .letter {
 	font-family: 'Raleway';
 	pointer-events: none;
-	font-size: 100px;
+	font-size: 85px;
 	font-weight: 600;
+	color: rgb(250, 229, 204);
+	text-shadow: 3px 4px rgb(136, 110, 75);
 }
