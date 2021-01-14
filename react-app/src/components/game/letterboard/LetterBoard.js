@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react';
 export default function LetterBoard() {
 	const [boardLetters, setBoardLetters] = useState(['aaao', 'bbcb', 'cccc', 'dddd']);
 	const [loaded, setLoaded] = useState(false);
+	const [selection, setSelection] = useState(null);
 	const [selectedLetters, setSelectedLetters] = useState([]);
+	const [letters, setLetters] = useState([]);
+	const [words, setWords] = useState([]);
 
 	const findArrIdxInArr = (array, item) => {
 		let idx;
@@ -13,12 +16,55 @@ export default function LetterBoard() {
 				idx = i;
 			}
 		});
-		return idx || false;
+		return idx;
+	};
+
+	const handleLetterClick = e => {
+		const newMove = e.target // parses the location numbers
+			.getAttribute('data-location')
+			.split(',')
+			.map(strNum => parseInt(strNum, 10));
+		setSelection(newMove);
 	};
 
 	useEffect(() => {
-		console.log('this useeffect logged the letters', selectedLetters);
-	}, [selectedLetters]);
+		if (!selection) return;
+		const newMove = selection;
+		const newMoveEle = document.getElementById(newMove.toString());
+		// checks if deselecting
+		let deselectedLetterIndex = findArrIdxInArr(selectedLetters, newMove);
+		// takes care of exception when deselcting first selection at 0 index
+		if (deselectedLetterIndex >= 0) {
+			if (deselectedLetterIndex === 0) {
+				selectedLetters.forEach(letter => {
+					let letterEle = document.getElementById(letter.toString());
+					letterEle.classList.remove('selectedLetter');
+				});
+				setSelectedLetters([]);
+				return;
+			}
+			const deselectedLetters = selectedLetters.slice(
+				deselectedLetterIndex,
+				selectedLetters.length
+			);
+			setSelectedLetters(selectedLetters.slice(0, deselectedLetterIndex));
+
+			//deselects letters
+			deselectedLetters.forEach(deselectedLetter => {
+				let deselected = document.getElementById(deselectedLetter.toString());
+				deselected.classList.remove('selectedLetter');
+			});
+			return;
+		} else if (isValidMove(newMove)) {
+			setSelectedLetters([...selectedLetters, newMove]);
+			newMoveEle.classList.add('selectedLetter');
+		} else {
+			return;
+		}
+
+		console.log(newMoveEle.getAttribute('value'));
+		console.log(newMoveEle.getBoundingClientRect());
+	}, [selection]);
 	// why does it run here but not latter on
 
 	const isValidMove = newMove => {
@@ -50,39 +96,6 @@ export default function LetterBoard() {
 	// add child element that is absolutley positioned to the letter box
 	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
-	const handleLetterClick = e => {
-		const newMove = e.target // parses the location numbers
-			.getAttribute('data-location')
-			.split(',')
-			.map(strNum => parseInt(strNum, 10));
-		//check if move was already made
-		let moveIdxIfInSelected = findArrIdxInArr(selectedLetters, newMove);
-		if (moveIdxIfInSelected) {
-			let deselectedLetterIndex = moveIdxIfInSelected;
-			const deselectedLetters = selectedLetters.slice(
-				deselectedLetterIndex,
-				selectedLetters.length
-			);
-			setSelectedLetters(selectedLetters.slice(0, deselectedLetterIndex));
-
-			deselectedLetters.forEach(deselectedLetter => {
-				let deselected = document.getElementById(deselectedLetter.toString());
-				deselected.classList.remove('selectedLetter');
-			});
-			return;
-		}
-
-		if (isValidMove(newMove)) {
-			setSelectedLetters(selectedLetters.push(newMove));
-			e.target.classList.add('selectedLetter');
-		} else {
-			return;
-		}
-
-		console.log(e.target.getAttribute('value'));
-		console.log(e.target.getBoundingClientRect());
-	};
-
 	if (!loaded) {
 		setBoardLetters(
 			boardLetters.map((row, rowNum) => {
@@ -110,7 +123,6 @@ export default function LetterBoard() {
 		);
 		setLoaded(true);
 	}
-	// useEffect(() => {}, [boardLetters]);
 
 	return (
 		<>
