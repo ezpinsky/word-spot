@@ -65,27 +65,27 @@ WordSpot is a fast-paced word-finding game similar to boggle. Find as many words
 - id
 - username
 - email
-- hashedPassword
-- lastLoggedInDate
+- hash_pass
+- last_logged_in
 
 ### 2. Friends
 
 - id
-- userId
-- friendIds
+- user_id
+- friend_id
 
-### 3. LetterGrid
+### 3. LetterBoard
 
 - id
-- userId
+- user_id
 - letters
 - words
 
 ### 4. Score
 
 - id
-- userId
-- letterGridId
+- user_id
+- letter_board_id
 - score
 - date
 

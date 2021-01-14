@@ -2,8 +2,9 @@ import './letterboard.css';
 import React, { useEffect, useState } from 'react';
 
 export default function LetterBoard() {
-	const [boardLetters, setBoardLetters] = useState(['aako', 'bncb', 'cilc', 'dood']);
+	const [letterBoard, setLetterBoard] = useState(['aako', 'bncb', 'cilc', 'dood']);
 	const [loaded, setLoaded] = useState(false);
+	const [boardLoaded, setboardLoaded] = useState(false);
 	const [selection, setSelection] = useState(null);
 	const [selectedLetters, setSelectedLetters] = useState([]);
 	const [letters, setLetters] = useState([]);
@@ -11,6 +12,7 @@ export default function LetterBoard() {
 	const [foundWords, setFoundWords] = useState([]);
 	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start Spotting!');
 	const [score, setScore] = useState(0);
+
 	const foundWordMessages = [
 		"You're Doing Great!",
 		'Great Job!',
@@ -19,6 +21,13 @@ export default function LetterBoard() {
 		'That Was A Hard One!',
 		'Nice Spot!',
 	];
+
+	const fetchLetterBoard = async () => {
+		let res = await fetch('/api/letterboards');
+		res = await res.json();
+		setLetterBoard(res.letterBoard);
+	};
+
 	const findArrIdxInArr = (array, item) => {
 		let idx;
 		array.forEach((el, i) => {
@@ -122,9 +131,11 @@ export default function LetterBoard() {
 		setLetters([]);
 		setSelectedLetters([]);
 	};
+
 	if (!loaded) {
-		setBoardLetters(
-			boardLetters.map((row, rowNum) => {
+		setLoaded(true);
+		setLetterBoard(
+			letterBoard.map((row, rowNum) => {
 				return (
 					<div key={`row${rowNum}`} className='gridRow'>
 						{row.split('').map((letter, colNum) => {
@@ -147,7 +158,6 @@ export default function LetterBoard() {
 				);
 			})
 		);
-		setLoaded(true);
 	}
 
 	return (
@@ -158,7 +168,7 @@ export default function LetterBoard() {
 						<p>{gameMessage}</p>
 					</div>
 					<div id='letterGridContainer'>
-						<div id='letterGrid'>{boardLetters}</div>
+						<div id='letterGrid'>{boardLoaded && letterBoard}</div>
 					</div>
 					<div id='buttonContainer'>
 						<button className='spotWordBtn' onClick={handleWordSubmit}>

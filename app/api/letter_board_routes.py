@@ -3,6 +3,7 @@ import os
 import itertools
 from collections import deque
 import time
+from ..models.db import db
 
 
 '''
@@ -95,16 +96,21 @@ def find_best_grid(letters): # 'aaaa bbbb cccc dddd'
     return answer
 
 
-    # grid_words = [item[0] for item in list(find_words(grid, words, prefixes))]  # all words for grid orientation
+# usse threading to lock thread for the algorithm before returning my_global_var check w19d1 lecture material
+# https://open.appacademy.io/learn/js-py---aug-2020-online/week-19-aug-2020-online/basic-python-threading-demo
+print(my_global_var)
+
+
+def find_all_words(letters):
+    grid = letters.split()
+    prefix_letters = ''.join(set(''.join(grid)))
+    is_grid_word = re.compile('[' + prefix_letters + ']{3,}$', re.I).match
+    words = set(word.rstrip('\n') for word in open(f'{os.getcwd()}/app/api/words.txt') if is_grid_word(word))
+    prefixes = set(word[:i] for word in words
+                   for i in range(2, len(word) + 1))
+    grid_words = [item[0] for item in list(find_words(grid, words, prefixes))]
+
+    return grid_words
     # print('longest word is', max(grid_words, key=lambda word: len(word)))  # longest word
 
-
-# Printing result
-start = time.time()
-print(list(find_best_grid('lpsacfszoicavdli')))
-end = time.time()
-print('time to run: ', end - start)
-# use threading to lock thread for the algorithm before returning my_global_var check w19d1 lecture material
-# https://open.appacademy.io/learn/js-py---aug-2020-online/week-19-aug-2020-online/basic-python-threading-demo
-
-print(my_global_var)
+print(find_all_words('ansm eauo vens icra'))
