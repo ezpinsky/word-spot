@@ -5,8 +5,10 @@ import './game.css';
 export default function Game() {
 	return (
 		<>
-			<h1 id='title'>Word Spot</h1>
-			<LetterBoard />
+			<div id='background'>
+				<h1 id='title'>Logo Goes Here</h1>
+				<LetterBoard />
+			</div>
 		</>
 	);
 }

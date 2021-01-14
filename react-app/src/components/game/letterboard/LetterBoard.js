@@ -7,9 +7,10 @@ export default function LetterBoard() {
 	const [selection, setSelection] = useState(null);
 	const [selectedLetters, setSelectedLetters] = useState([]);
 	const [letters, setLetters] = useState([]);
-	const [gridWords, setGridWords] = useState(['coo', 'bank', 'ban']);
+	const [gridWords, setGridWords] = useState(['coo', 'bank', 'ban', 'coil']);
 	const [foundWords, setFoundWords] = useState([]);
 	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start Spotting!');
+	const [score, setScore] = useState(0);
 	const foundWordMessages = [
 		"You're Doing Great!",
 		'Great Job!',
@@ -110,8 +111,7 @@ export default function LetterBoard() {
 			console.log(foundWords.indexOf(submittedWord));
 			setGameMessage("You've Already Found That Word! Try Again!");
 		} else if (gridWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
-			let randomMessage =
-				foundWordMessages[Math.floor(Math.random() * (foundWordMessages.length - 0 + 1) + 0)];
+			let randomMessage = foundWordMessages[Math.floor(Math.random() * foundWordMessages.length)];
 			setGameMessage(randomMessage);
 			setFoundWords([...foundWords, submittedWord]);
 		} else {

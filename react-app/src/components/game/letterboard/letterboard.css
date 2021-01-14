@@ -4,8 +4,8 @@
 }
 
 #letterGrid {
-	min-width: 750px;
-	height: 750px;
+	min-width: 700px;
+	min-height: 700px;
 	display: flex;
 	flex-direction: column;
 	border: 3px solid rgb(177, 151, 95);
@@ -24,8 +24,8 @@
 }
 
 .letterContainer {
-	width: 150px;
-	height: 150px;
+	width: 135px;
+	height: 135px;
 	border: 7px solid burlywood;
 	border-radius: 15px;
 	background-image: url('../../../images/letterBackground.jpg');
