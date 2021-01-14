@@ -2,13 +2,22 @@ import './letterboard.css';
 import React, { useEffect, useState } from 'react';
 
 export default function LetterBoard() {
-	const [boardLetters, setBoardLetters] = useState(['aaao', 'bbcb', 'cccc', 'dddd']);
+	const [boardLetters, setBoardLetters] = useState(['aako', 'bncb', 'cilc', 'dood']);
 	const [loaded, setLoaded] = useState(false);
 	const [selection, setSelection] = useState(null);
 	const [selectedLetters, setSelectedLetters] = useState([]);
 	const [letters, setLetters] = useState([]);
-	const [words, setWords] = useState([]);
-
+	const [gridWords, setGridWords] = useState(['coo', 'bank', 'ban']);
+	const [foundWords, setFoundWords] = useState([]);
+	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start Spotting!');
+	const foundWordMessages = [
+		"You're Doing Great!",
+		'Great Job!',
+		'You Found Another One!',
+		"Wow! You're Really Good!",
+		'That Was A Hard One!',
+		'Nice Spot!',
+	];
 	const findArrIdxInArr = (array, item) => {
 		let idx;
 		array.forEach((el, i) => {
@@ -27,45 +36,24 @@ export default function LetterBoard() {
 		setSelection(newMove);
 	};
 
-	useEffect(() => {
-		if (!selection) return;
-		const newMove = selection;
-		const newMoveEle = document.getElementById(newMove.toString());
-		// checks if deselecting
-		let deselectedLetterIndex = findArrIdxInArr(selectedLetters, newMove);
-		// takes care of exception when deselcting first selection at 0 index
-		if (deselectedLetterIndex >= 0) {
-			if (deselectedLetterIndex === 0) {
-				selectedLetters.forEach(letter => {
-					let letterEle = document.getElementById(letter.toString());
-					letterEle.classList.remove('selectedLetter');
-				});
-				setSelectedLetters([]);
-				return;
-			}
-			const deselectedLetters = selectedLetters.slice(
-				deselectedLetterIndex,
-				selectedLetters.length
-			);
-			setSelectedLetters(selectedLetters.slice(0, deselectedLetterIndex));
-
-			//deselects letters
+	const deselectLetters = idx => {
+		if (idx === 0) {
+			selectedLetters.forEach(letter => {
+				let letterEle = document.getElementById(letter.toString());
+				letterEle.classList.remove('selectedLetter');
+			});
+			setSelectedLetters([]);
+			return;
+		} else {
+			const deselectedLetters = selectedLetters.slice(idx, selectedLetters.length);
+			setSelectedLetters(selectedLetters.slice(0, idx));
 			deselectedLetters.forEach(deselectedLetter => {
 				let deselected = document.getElementById(deselectedLetter.toString());
 				deselected.classList.remove('selectedLetter');
 			});
 			return;
-		} else if (isValidMove(newMove)) {
-			setSelectedLetters([...selectedLetters, newMove]);
-			newMoveEle.classList.add('selectedLetter');
-		} else {
-			return;
 		}
-
-		console.log(newMoveEle.getAttribute('value'));
-		console.log(newMoveEle.getBoundingClientRect());
-	}, [selection]);
-	// why does it run here but not latter on
+	};
 
 	const isValidMove = newMove => {
 		if (!selectedLetters.length) return true;
@@ -83,10 +71,26 @@ export default function LetterBoard() {
 				}
 			}
 		}
-		console.log('selectedLetters are: ', selectedLetters);
-		console.log('valid moves are: ', validMoves);
-		return findArrIdxInArr(validMoves, newMove) ? true : false;
+		return findArrIdxInArr(validMoves, newMove) + 1 ? true : false; // add 1 to allow reuslt of 0 to be valid move but result -1 will still be invalid.
 	};
+
+	useEffect(() => {
+		if (!selection) return;
+		const newMove = selection;
+		const newMoveEle = document.getElementById(newMove.toString());
+		const newLetter = newMoveEle.getAttribute('value');
+		// checks if deselecting
+		let deselectedLetterIndex = findArrIdxInArr(selectedLetters, newMove);
+		// takes care of exception when deselcting first selection at 0 index
+		if (deselectedLetterIndex >= 0) {
+			deselectLetters(deselectedLetterIndex);
+		} else if (isValidMove(newMove)) {
+			setSelectedLetters([...selectedLetters, newMove]);
+			setLetters([...letters, newLetter]);
+			newMoveEle.classList.add('selectedLetter');
+		}
+		console.log(newMoveEle.getBoundingClientRect());
+	}, [selection]);
 
 	// sudo code for algo to determine where to put a line connecting lines
 	// e.target.getBoundingClientRect())
@@ -96,6 +100,28 @@ export default function LetterBoard() {
 	// add child element that is absolutley positioned to the letter box
 	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
+	const handleWordSubmit = () => {
+		let submittedWord = letters.join('');
+		// if already found word then unselect and play different noise
+		// change gameplay message above board to You already spotted that word!
+		if (foundWords.indexOf(submittedWord) >= 0) {
+			console.log('found words are: ', foundWords);
+			console.log('submitted word is: ', submittedWord);
+			console.log(foundWords.indexOf(submittedWord));
+			setGameMessage("You've Already Found That Word! Try Again!");
+		} else if (gridWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
+			let randomMessage =
+				foundWordMessages[Math.floor(Math.random() * (foundWordMessages.length - 0 + 1) + 0)];
+			setGameMessage(randomMessage);
+			setFoundWords([...foundWords, submittedWord]);
+		} else {
+			setGameMessage("Sorry, But That's Not A Word. Please Try Again!");
+		}
+
+		deselectLetters(0);
+		setLetters([]);
+		setSelectedLetters([]);
+	};
 	if (!loaded) {
 		setBoardLetters(
 			boardLetters.map((row, rowNum) => {
@@ -128,9 +154,16 @@ export default function LetterBoard() {
 		<>
 			{loaded && (
 				<>
-					<div id='lost' value='you found me'></div>
+					<div id='messageContainer'>
+						<p>{gameMessage}</p>
+					</div>
 					<div id='letterGridContainer'>
 						<div id='letterGrid'>{boardLetters}</div>
+					</div>
+					<div id='buttonContainer'>
+						<button className='spotWordBtn' onClick={handleWordSubmit}>
+							Spot
+						</button>
 					</div>
 				</>
 			)}

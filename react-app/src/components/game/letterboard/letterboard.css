@@ -58,3 +58,36 @@
 	color: rgb(250, 229, 204);
 	text-shadow: 3px 4px rgb(136, 110, 75);
 }
+
+#buttonContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.spotWordBtn {
+	width: 100px;
+	height: 50px;
+	border-radius: 10px;
+	outline: none;
+	border: none;
+	margin: 20px;
+	background-color: burlywood;
+	font-size: 30px;
+	font-weight: 800;
+	color: rgb(250, 229, 204);
+	text-shadow: 3px 4px rgb(136, 110, 75);
+	cursor: pointer;
+	background-image: url('../../../images/letterBackground.jpg');
+	background-position: center;
+	border: 3px solid burlywood;
+}
+
+#messageContainer {
+	display: flex;
+	justify-content: center;
+	font-family: 'Raleway';
+	font-size: 30px;
+	font-weight: 900;
+	color: rgb(136, 110, 75);
+	/* text-shadow: 3px 4px rgb(136, 110, 75); */
+}
