@@ -18,26 +18,26 @@ class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(18), nullable=False, unique=True)
   email = db.Column(db.String(255), nullable=False, unique=True)
-  hashedPassword = db.Column(db.String(255), nullable=False)
-  lastLoggedIn = db.Column(db.DateTime, nullable=False)
+  hash_pass = db.Column(db.String(255), nullable=False)
+  last_logged_in = db.Column(db.DateTime, nullable=False)
 
-  friendList = db.relationship('User', secondary='friends', primaryjoin=id == friends.c.friend_id, secondaryjoin=id == friends.c.user_id, backref='friends')
-  letterGrids = relationship('LetterGrid')
+  friend_list = db.relationship('User', secondary='friends', primaryjoin=id == friends.c.friend_id, secondaryjoin=id == friends.c.user_id, backref='friends')
+  letter_boards = relationship('Letter_Board')
 
-  def to_dict_friendList(self):
+  def to_dict_friend_list(self):
     return {friends: [User.query.filter(User.id == friend_id).first().to_dict()
-                      for friend_id in self.friendList
+                      for friend_id in self.friend_list
                       ]
             }
 
 
   @property  # use this decorator for getters and setters
   def password(self):
-    return self.hashedPassword
+    return self.hash_pass
 
   @password.setter
   def password(self, password):
-    self.hashedPassword = generate_password_hash(password)  # hashes user's password and stores in db
+    self.hash_pass = generate_password_hash(password)  # hashes user's password and stores in db
 
   def check_password(self, password):
     return check_password_hash(self.password, password)  # checks if user submitted password matches hash
