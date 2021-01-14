@@ -1,0 +1,11 @@
+#title {
+	margin: auto;
+	text-align: center;
+}
+
+#background {
+	width: 100%;
+	height: 100%;
+	/* background-image: url('../../images/gameBackground.jpg');
+	background-position: center; */
+}

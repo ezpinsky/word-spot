@@ -101,5 +101,10 @@ def find_best_grid(letters): # 'aaaa bbbb cccc dddd'
 
 # Printing result
 start = time.time()
-print(list(find_best_grid('aksacfsooickvdli')))
+print(list(find_best_grid('lpsacfszoicavdli')))
 end = time.time()
+print('time to run: ', end - start)
+# use threading to lock thread for the algorithm before returning my_global_var check w19d1 lecture material
+# https://open.appacademy.io/learn/js-py---aug-2020-online/week-19-aug-2020-online/basic-python-threading-demo
+
+print(my_global_var)

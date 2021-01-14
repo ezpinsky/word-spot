@@ -1,0 +1,93 @@
+#letterGridContainer {
+	display: flex;
+	justify-content: center;
+}
+
+#letterGrid {
+	min-width: 700px;
+	min-height: 700px;
+	display: flex;
+	flex-direction: column;
+	border: 3px solid rgb(177, 151, 95);
+	border-radius: 6px;
+	padding: 20px;
+	box-shadow: 5px 5px 15px;
+	background-image: url('../../../images/letterGridBackground.jpg');
+	background-position-x: -200px;
+}
+
+.gridRow {
+	flex: 1;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.letterContainer {
+	width: 135px;
+	height: 135px;
+	border: 7px solid burlywood;
+	border-radius: 15px;
+	background-image: url('../../../images/letterBackground.jpg');
+	background-position: center;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+}
+
+.letterContainer:hover {
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.letterContainer:active {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.selectedLetter {
+	border: 7px solid rgb(136, 110, 75);
+	border-radius: 15px;
+}
+
+.letter {
+	font-family: 'Raleway';
+	pointer-events: none;
+	font-size: 85px;
+	font-weight: 600;
+	color: rgb(250, 229, 204);
+	text-shadow: 3px 4px rgb(136, 110, 75);
+}
+
+#buttonContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.spotWordBtn {
+	width: 100px;
+	height: 50px;
+	border-radius: 10px;
+	outline: none;
+	border: none;
+	margin: 20px;
+	background-color: burlywood;
+	font-size: 30px;
+	font-weight: 800;
+	color: rgb(250, 229, 204);
+	text-shadow: 3px 4px rgb(136, 110, 75);
+	cursor: pointer;
+	background-image: url('../../../images/letterBackground.jpg');
+	background-position: center;
+	border: 3px solid burlywood;
+}
+
+#messageContainer {
+	display: flex;
+	justify-content: center;
+	font-family: 'Raleway';
+	font-size: 30px;
+	font-weight: 900;
+	color: rgb(136, 110, 75);
+	/* text-shadow: 3px 4px rgb(136, 110, 75); */
+}
