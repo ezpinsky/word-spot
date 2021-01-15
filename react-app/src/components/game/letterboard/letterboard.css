@@ -11,7 +11,7 @@
 	border: 3px solid rgb(177, 151, 95);
 	border-radius: 6px;
 	padding: 20px;
-	box-shadow: 5px 5px 15px;
+	box-shadow: 4px 4px 10px;
 	background-image: url('../../../images/letterGridBackground.jpg');
 	background-position-x: -200px;
 }
@@ -65,21 +65,22 @@
 }
 
 .spotWordBtn {
-	width: 100px;
+	width: 200px;
 	height: 50px;
-	border-radius: 10px;
 	outline: none;
-	border: none;
 	margin: 20px;
 	background-color: burlywood;
-	font-size: 30px;
+	font-size: 35px;
+	text-align: center;
+	line-height: 2px;
 	font-weight: 800;
 	color: rgb(250, 229, 204);
 	text-shadow: 3px 4px rgb(136, 110, 75);
 	cursor: pointer;
 	background-image: url('../../../images/letterBackground.jpg');
 	background-position: center;
-	border: 3px solid burlywood;
+	border: 4px solid burlywood;
+	border-radius: 10px;
 }
 
 #messageContainer {

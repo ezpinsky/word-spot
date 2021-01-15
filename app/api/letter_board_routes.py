@@ -3,16 +3,15 @@ import os
 import itertools
 from collections import deque
 import time
-from ..models.db import db
+
 
 
 '''
-create a single algo that finds all words for a given grid
 change out all 4s in the algo for an ncols variable and for the maxtrixise change out the 5 for ncols + 1
 
 '''
 
-my_global_var = ''
+
 # enumerate essentially takes an iterable and creates an enumerate object which can be converted to list of tuples with the value of the iterable and the index/count of iteration
 def find_words(grid, words, prefixes):
   wordMemo = dict()
@@ -58,27 +57,23 @@ def orientation_generator(letters, words, prefixes):
   count = 0
   letter_orientation = 'letters'
   rotated_orientations = set()
-  for i in itertools.permutations(letters):
+  letters = ''.join(letters.split(' '))
+  for orientation in itertools.permutations(letters):
       count += 1
-      if i not in rotated_orientations:
-          i = matrixize(i)
+      if orientation not in rotated_orientations:
+          orientation = matrixize(orientation)
+        # gets all rotations for memoization cuts permuations by 75%
           for z in range(3):
-            rotated_i = ''.join([list(a) for a in (zip(*reversed(i)))].pop())
-            rotated_orientations.add(''.join(rotated_i))
-          words_found = len(list(find_words(i, words, prefixes)))  # checks all words for orientation
-          if words_found > max_words:  # compare the yielded value to current max
-            letter_orientation = ''.join(i)
-            max_words = words_found
-            print(letter_orientation, max_words, 'permutation count is', count)
-            if max_words >= 45:
-              my_global_var = letter_orientation
-              break
-          yield i
-  return {letter_orientation: max_words}
+            orientation = ' '.join([''.join(list_chars) for list_chars in [list(tup_chars) for tup_chars in list(zip(*reversed(orientation)))]])
+            rotated_orientations.add(orientation)
 
-def find_best_grid(letters): # 'aaaa bbbb cccc dddd'
+          num_words = len(list(find_words(orientation.split(' '), words, prefixes)))  # checks all words for orientation
+          yield orientation, num_words, words, count
+
+
+def find_suitable_orientation(letters):  # 'aaaa bbbb cccc dddd'
     grid = letters.split()  # ['fpie', 'amlo', 'ewbx', 'astu'] list of rows
-    # nrows, ncols = len(grid), len(grid[0])  # gets number of col and number of rows
+    nrows, ncols = len(grid), len(grid[0])  # gets number of col and number of rows
 
     # create string from letters for regex -- A dictionary word that could be a solution must use only the grid's letters
     prefix_letters = ''.join(set(''.join(grid)))
@@ -91,14 +86,12 @@ def find_best_grid(letters): # 'aaaa bbbb cccc dddd'
     # will speed up the word check by checking first for prefixes and then entire words -- gets all prefixes from our words
     prefixes = set(word[:i] for word in words
                    for i in range(2, len(word) + 1))
-
-    answer = orientation_generator(letters, words, prefixes)
-    return answer
-
-
-# usse threading to lock thread for the algorithm before returning my_global_var check w19d1 lecture material
-# https://open.appacademy.io/learn/js-py---aug-2020-online/week-19-aug-2020-online/basic-python-threading-demo
-print(my_global_var)
+    max = (0,)
+    for orientation, num_words, words, count in orientation_generator(letters, words, prefixes):
+      if num_words > max[0]:
+        max = num_words, orientation.split(' '), list(words)
+      if num_words >= 120 or count >= 5500:  # Only allows to run for maximum of 10 seconds
+        return max
 
 
 def find_all_words(letters):
@@ -113,4 +106,5 @@ def find_all_words(letters):
     return grid_words
     # print('longest word is', max(grid_words, key=lambda word: len(word)))  # longest word
 
-print(find_all_words('ansm eauo vens icra'))
+
+print(find_suitable_orientation(['ansm', 'eall', 'vezs', 'icra']))

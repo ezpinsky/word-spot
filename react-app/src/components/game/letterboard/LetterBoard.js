@@ -168,7 +168,7 @@ export default function LetterBoard() {
 						<p>{gameMessage}</p>
 					</div>
 					<div id='letterGridContainer'>
-						<div id='letterGrid'>{boardLoaded && letterBoard}</div>
+						<div id='letterGrid'>{letterBoard}</div>
 					</div>
 					<div id='buttonContainer'>
 						<button className='spotWordBtn' onClick={handleWordSubmit}>
