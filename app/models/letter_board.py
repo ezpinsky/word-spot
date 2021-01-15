@@ -7,7 +7,7 @@ class Letter_Board(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-  letters = db.Column(db.String, nullable=False)
+  letters = db.Column(db.JSON, nullable=False)
   words = db.Column(db.JSON, nullable=False)
   orientations = db.Column(db.JSON, nullable=False)
 

@@ -66,6 +66,7 @@ def orientation_generator(letters, words, prefixes):
           for z in range(3):
             orientation = ' '.join([''.join(list_chars) for list_chars in [list(tup_chars) for tup_chars in list(zip(*reversed(orientation)))]])
             rotated_orientations.add(orientation)
+            print(orientation)
 
           num_words = len(list(find_words(orientation.split(' '), words, prefixes)))  # checks all words for orientation
           yield orientation, num_words, words, count
@@ -107,4 +108,16 @@ def find_all_words(letters):
     # print('longest word is', max(grid_words, key=lambda word: len(word)))  # longest word
 
 
-print(find_suitable_orientation(['ansm', 'eall', 'vezs', 'icra']))
+# print(find_suitable_orientation(['ansm', 'eall', 'vezs', 'icra']))
+def find_all_rotations(letters):
+  rotated_orientations = []
+  for z in range(3):
+    print(letters)
+    letters = ''.join([''.join(list(tup_chars)) for tup_chars in list(zip(*reversed(letters)))]).split(' ')
+    rotated_orientations.append(letters)
+    letters = ' '.join(letters)
+  return rotated_orientations
+
+
+print(find_all_rotations('ansm eall vezs icra'))
+# print(find_suitable_orientation('ansm eall vezs icra'))
