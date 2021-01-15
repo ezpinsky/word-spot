@@ -13,7 +13,7 @@ class Letter_Board(db.Model):
 
   def to_dict(self):
     return {'user_id': self.user_id,
-            'leters': self.letters,
+            'letters': self.letters,
             'words': self.words,
             'orientations': self.orientations
             }
