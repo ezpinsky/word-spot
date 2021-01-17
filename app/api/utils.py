@@ -54,7 +54,6 @@ def matrixize(letters):
 # function to find every orientation of letters
 def orientation_generator(letters, words, prefixes):
   count = 0
-  letter_orientation = 'letters'
   rotated_orientations = set()
   letters = ''.join(letters.split(' '))
   for orientation in itertools.permutations(letters):
@@ -105,6 +104,7 @@ def find_all_words(letters):
     return grid_words
 
     # print('longest word is', max(grid_words, key=lambda word: len(word)))  # longest word
+
 
 def find_all_rotations(letters):
   letters = ' '.join(letters)
