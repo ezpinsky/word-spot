@@ -1,13 +1,12 @@
 import './letterboard.css';
-import React, { useEffect, useState, useRef } from 'react';
-import { authenticate } from '../../../services/auth';
+import React, { useEffect, useState } from 'react';
 
 export default function LetterBoard() {
 	const [myUserId, setMyUserId] = useState(null);
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
 	const [error, setError] = useState('');
-	const [letterBoard, setLetterBoard] = useState(['jaoa', 'svis', 'dald', 'weuf']);
+	const [letterBoard, setLetterBoard] = useState([]);
 	const [orientations, setOrientations] = useState([]);
 	const [boardWords, setBoardWords] = useState([]);
 	const [selection, setSelection] = useState(null);
@@ -32,8 +31,7 @@ export default function LetterBoard() {
 			let res = await fetch('/api/letterboards/');
 			if (!res.ok) throw res;
 			res = await res.json();
-			// setLetterBoard(res.letters);
-			setLetterBoard(['jaoa', 'svis', 'dald', 'weuf']);
+			setLetterBoard(res.letters);
 			setOrientations([...res.orientations, spotLetters]);
 			setBoardWords(res.words);
 			setBoardLoaded(true);
