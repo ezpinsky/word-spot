@@ -1,8 +1,8 @@
-"""empty message
+"""users and letterboards
 
-Revision ID: 0e718b032d2c
+Revision ID: c7e728a7483a
 Revises: 
-Create Date: 2021-01-14 16:40:05.998695
+Create Date: 2021-01-17 12:02:37.139997
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0e718b032d2c'
+revision = 'c7e728a7483a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,7 @@ def upgrade():
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('hash_pass', sa.String(length=255), nullable=False),
     sa.Column('last_logged_in', sa.DateTime(), nullable=False),
+    sa.Column('last_played_id', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
@@ -37,7 +38,7 @@ def upgrade():
     op.create_table('letter_board',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('letters', sa.String(), nullable=False),
+    sa.Column('letters', sa.JSON(), nullable=False),
     sa.Column('words', sa.JSON(), nullable=False),
     sa.Column('orientations', sa.JSON(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),

@@ -1,19 +1,21 @@
 import './letterboard.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { authenticate } from '../../../services/auth';
 
 export default function LetterBoard() {
-	const [letterBoard, setLetterBoard] = useState([]);
+	const [myUserId, setMyUserId] = useState(null);
 	const [loaded, setLoaded] = useState(false);
-	const [boardLoaded, setboardLoaded] = useState(false);
+	const [boardLoaded, setBoardLoaded] = useState(false);
+	const [error, setError] = useState('');
+	const [letterBoard, setLetterBoard] = useState(['asdf', 'asdf', 'asdf', 'asdf']);
+	const [orientations, setOrientations] = useState([]);
+	const [boardWords, setBoardWords] = useState([]);
 	const [selection, setSelection] = useState(null);
 	const [selectedLetters, setSelectedLetters] = useState([]);
-	const [letters, setLetters] = useState([]);
-	const [gridWords, setGridWords] = useState([]);
+	const [spotLetters, setSpotLetters] = useState([]);
 	const [foundWords, setFoundWords] = useState([]);
 	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start Spotting!');
 	const [score, setScore] = useState(0);
-	const [myUserId, setMyUserId] = useState(null);
 
 	const foundWordMessages = [
 		"You're Doing Great!",
@@ -24,19 +26,52 @@ export default function LetterBoard() {
 		'Nice Spot!',
 	];
 
-	// getting unauthorized error I think its fixed with trailing slash. need ot fix backend stuff!!
-	useEffect(() => {
-		const fetchLetterBoard = async () => {
-			setMyUserId((await authenticate()).id);
-			if (myUserId) {
-				let res = await fetch('/api/letterboards/');
-				res = await res.json();
-				setLetterBoard(res.letterBoard);
-				setLoaded(true);
-			}
-		};
-		fetchLetterBoard();
-	}, []);
+	// const fetchLetterBoard = async () => {
+	// 	setMyUserId((await authenticate()).id);
+	// 	if (myUserId) {
+	// 		try {
+	// 			let res = await fetch('/api/letterboards/');
+	// 			if (!res.ok) throw res;
+	// 			res = await res.json();
+	// 		} catch (err) {
+	// 			console.error(err);
+	// 		}
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	setLoaded(true);
+	// 	setBoardLoaded(false);
+	// 	let isSubscribed = true;
+	// 	fetchLetterBoard()
+	// 		.then(res => {
+	// 			res = res.json();
+	// 			console.log('I run');
+	// 		})
+	// 		.then(res => {
+	// 			if (isSubscribed) {
+	// 				setLetterBoard(res.letters);
+	// 				setOrientations([...res.orientations, spotLetters]);
+	// 				setBoardWords(res.words);
+	// 				setBoardLoaded(true);
+	// 				console.log(res.words);
+	// 			}
+	// 		})
+	// 		.catch(err => (isSubscribed ? setError(err.toString()) : null));
+	// 	return () => (isSubscribed = false);
+	// }, []);
+
+	// useEffect(() => {
+	// 	(async () => {
+	// 		let res = await fetch('/api/letterboards/');
+	// 		res = await res.json();
+	// 		setLetterBoard(res.letters);
+	// 		setOrientations([...res.orientations, spotLetters]);
+	// 		setBoardWords(res.words);
+	// 		setBoardLoaded(true);
+	// 		setMyUserId((await authenticate()).id);
+	// 	})();
+	// }, []);
 
 	const findArrIdxInArr = (array, item) => {
 		let idx;
@@ -106,7 +141,7 @@ export default function LetterBoard() {
 			deselectLetters(deselectedLetterIndex);
 		} else if (isValidMove(newMove)) {
 			setSelectedLetters([...selectedLetters, newMove]);
-			setLetters([...letters, newLetter]);
+			setSpotLetters([...spotLetters, newLetter]);
 			newMoveEle.classList.add('selectedLetter');
 		}
 		console.log(newMoveEle.getBoundingClientRect());
@@ -121,7 +156,7 @@ export default function LetterBoard() {
 	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
 	const handleWordSubmit = () => {
-		let submittedWord = letters.join('');
+		let submittedWord = spotLetters.join('');
 		// if already found word then unselect and play different noise
 		// change gameplay message above board to You already spotted that word!
 		if (foundWords.indexOf(submittedWord) >= 0) {
@@ -129,7 +164,7 @@ export default function LetterBoard() {
 			console.log('submitted word is: ', submittedWord);
 			console.log(foundWords.indexOf(submittedWord));
 			setGameMessage("You've Already Found That Word! Try Again!");
-		} else if (gridWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
+		} else if (boardWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
 			let randomMessage = foundWordMessages[Math.floor(Math.random() * foundWordMessages.length)];
 			setGameMessage(randomMessage);
 			setFoundWords([...foundWords, submittedWord]);
@@ -138,15 +173,15 @@ export default function LetterBoard() {
 		}
 
 		deselectLetters(0);
-		setLetters([]);
+		setSpotLetters([]);
 		setSelectedLetters([]);
 	};
 
-	if (!loaded) {
-		// fetchLetterBoard();
-		setLoaded(true);
+	if (boardLoaded) {
 		setLetterBoard(
 			letterBoard.map((row, rowNum) => {
+				console.log(typeof row, row);
+				if (typeof row !== 'string') return null;
 				return (
 					<div key={`row${rowNum}`} className='gridRow'>
 						{row.split('').map((letter, colNum) => {
