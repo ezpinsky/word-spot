@@ -1,4 +1,5 @@
 # WordSpot
+
 WordSpot is a fast-paced word-finding game similar to boggle. Find as many words as you can by connecting adjacent letters in 4 x 4 grid before the clock runs out. See if you can beat your friend’s highscore!
 
 ## MVP
@@ -209,9 +210,10 @@ WordSpot is a fast-paced word-finding game similar to boggle. Find as many words
 ## Tech Requirements
 
 - alembic
-- [chakra-ui](https://chakra-ui.com/) (for drawer and form components)
+- [chakra-ui](https://chakra-ui.com/) (drawer, modal, and form components)
 - email-validator
 - datetime (for updating datetime column in db)
+- gunicorn (Web Server Gateway Interface)
 - Flask
 - Flask-WTF
 - Flask Cors
