@@ -1,16 +1,22 @@
 import './letterboard.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { authenticate } from '../../../services/auth';
 
 export default function LetterBoard() {
-	const [boardLetters, setBoardLetters] = useState(['aako', 'bncb', 'cilc', 'dood']);
+	const [myUserId, setMyUserId] = useState(null);
 	const [loaded, setLoaded] = useState(false);
+	const [boardLoaded, setBoardLoaded] = useState(false);
+	const [error, setError] = useState('');
+	const [letterBoard, setLetterBoard] = useState(['jaoa', 'svis', 'dald', 'weuf']);
+	const [orientations, setOrientations] = useState([]);
+	const [boardWords, setBoardWords] = useState([]);
 	const [selection, setSelection] = useState(null);
 	const [selectedLetters, setSelectedLetters] = useState([]);
-	const [letters, setLetters] = useState([]);
-	const [gridWords, setGridWords] = useState(['coo', 'bank', 'ban', 'coil']);
+	const [spotLetters, setSpotLetters] = useState([]);
 	const [foundWords, setFoundWords] = useState([]);
 	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start Spotting!');
 	const [score, setScore] = useState(0);
+
 	const foundWordMessages = [
 		"You're Doing Great!",
 		'Great Job!',
@@ -19,6 +25,27 @@ export default function LetterBoard() {
 		'That Was A Hard One!',
 		'Nice Spot!',
 	];
+
+	const fetchLetterBoard = async () => {
+		setLoaded(true);
+		try {
+			let res = await fetch('/api/letterboards/');
+			if (!res.ok) throw res;
+			res = await res.json();
+			// setLetterBoard(res.letters);
+			setLetterBoard(['jaoa', 'svis', 'dald', 'weuf']);
+			setOrientations([...res.orientations, spotLetters]);
+			setBoardWords(res.words);
+			setBoardLoaded(true);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	useEffect(() => {
+		fetchLetterBoard();
+	}, []);
+
 	const findArrIdxInArr = (array, item) => {
 		let idx;
 		array.forEach((el, i) => {
@@ -87,7 +114,7 @@ export default function LetterBoard() {
 			deselectLetters(deselectedLetterIndex);
 		} else if (isValidMove(newMove)) {
 			setSelectedLetters([...selectedLetters, newMove]);
-			setLetters([...letters, newLetter]);
+			setSpotLetters([...spotLetters, newLetter]);
 			newMoveEle.classList.add('selectedLetter');
 		}
 		console.log(newMoveEle.getBoundingClientRect());
@@ -102,7 +129,7 @@ export default function LetterBoard() {
 	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
 	const handleWordSubmit = () => {
-		let submittedWord = letters.join('');
+		let submittedWord = spotLetters.join('');
 		// if already found word then unselect and play different noise
 		// change gameplay message above board to You already spotted that word!
 		if (foundWords.indexOf(submittedWord) >= 0) {
@@ -110,7 +137,7 @@ export default function LetterBoard() {
 			console.log('submitted word is: ', submittedWord);
 			console.log(foundWords.indexOf(submittedWord));
 			setGameMessage("You've Already Found That Word! Try Again!");
-		} else if (gridWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
+		} else if (boardWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
 			let randomMessage = foundWordMessages[Math.floor(Math.random() * foundWordMessages.length)];
 			setGameMessage(randomMessage);
 			setFoundWords([...foundWords, submittedWord]);
@@ -119,36 +146,9 @@ export default function LetterBoard() {
 		}
 
 		deselectLetters(0);
-		setLetters([]);
+		setSpotLetters([]);
 		setSelectedLetters([]);
 	};
-	if (!loaded) {
-		setBoardLetters(
-			boardLetters.map((row, rowNum) => {
-				return (
-					<div key={`row${rowNum}`} className='gridRow'>
-						{row.split('').map((letter, colNum) => {
-							return (
-								<div
-									data-location={[colNum, rowNum]}
-									key={[colNum, rowNum]}
-									className='letterContainer'
-									value={letter}
-									id={[colNum, rowNum]}
-									onClick={handleLetterClick}
-								>
-									<div className='letter' value={letter} key={[colNum, rowNum, 'letter']}>
-										{letter.toUpperCase()}
-									</div>
-								</div>
-							);
-						})}
-					</div>
-				);
-			})
-		);
-		setLoaded(true);
-	}
 
 	return (
 		<>
@@ -158,7 +158,32 @@ export default function LetterBoard() {
 						<p>{gameMessage}</p>
 					</div>
 					<div id='letterGridContainer'>
-						<div id='letterGrid'>{boardLetters}</div>
+						<div id='letterGrid'>
+							{letterBoard.map((row, rowNum) => {
+								return (
+									boardLoaded && (
+										<div key={`row${rowNum}`} className='gridRow'>
+											{row.split('').map((letter, colNum) => {
+												return (
+													<div
+														data-location={[colNum, rowNum]}
+														key={[colNum, rowNum]}
+														className='letterContainer'
+														value={letter}
+														id={[colNum, rowNum]}
+														onClick={handleLetterClick}
+													>
+														<div className='letter' value={letter} key={[colNum, rowNum, 'letter']}>
+															{letter.toUpperCase()}
+														</div>
+													</div>
+												);
+											})}
+										</div>
+									)
+								);
+							})}
+						</div>
 					</div>
 					<div id='buttonContainer'>
 						<button className='spotWordBtn' onClick={handleWordSubmit}>

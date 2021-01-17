@@ -20,6 +20,7 @@ class User(db.Model, UserMixin):
   email = db.Column(db.String(255), nullable=False, unique=True)
   hash_pass = db.Column(db.String(255), nullable=False)
   last_logged_in = db.Column(db.DateTime, nullable=False)
+  last_played_id = db.Column(db.Integer, nullable=True)
 
   friend_list = db.relationship('User', secondary='friends', primaryjoin=id == friends.c.friend_id, secondaryjoin=id == friends.c.user_id, backref='friends')
   letter_boards = relationship('Letter_Board')
@@ -45,5 +46,6 @@ class User(db.Model, UserMixin):
   def to_dict(self):
     return {'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'last_played_id': self.last_played_id
             }

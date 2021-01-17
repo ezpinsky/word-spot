@@ -6,7 +6,7 @@ export default function Game() {
 	return (
 		<>
 			<div id='background'>
-				<h1 id='title'>Logo Goes Here</h1>
+				<div id='logo'>Logo Goes Here</div>
 				<LetterBoard />
 			</div>
 		</>
