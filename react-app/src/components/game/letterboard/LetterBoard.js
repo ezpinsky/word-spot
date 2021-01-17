@@ -7,7 +7,7 @@ export default function LetterBoard() {
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
 	const [error, setError] = useState('');
-	const [letterBoard, setLetterBoard] = useState(['asdf', 'asdf', 'asdf', 'asdf']);
+	const [letterBoard, setLetterBoard] = useState(['jaoa', 'svis', 'dald', 'weuf']);
 	const [orientations, setOrientations] = useState([]);
 	const [boardWords, setBoardWords] = useState([]);
 	const [selection, setSelection] = useState(null);
@@ -26,52 +26,25 @@ export default function LetterBoard() {
 		'Nice Spot!',
 	];
 
-	// const fetchLetterBoard = async () => {
-	// 	setMyUserId((await authenticate()).id);
-	// 	if (myUserId) {
-	// 		try {
-	// 			let res = await fetch('/api/letterboards/');
-	// 			if (!res.ok) throw res;
-	// 			res = await res.json();
-	// 		} catch (err) {
-	// 			console.error(err);
-	// 		}
-	// 	}
-	// };
+	const fetchLetterBoard = async () => {
+		setLoaded(true);
+		try {
+			let res = await fetch('/api/letterboards/');
+			if (!res.ok) throw res;
+			res = await res.json();
+			// setLetterBoard(res.letters);
+			setLetterBoard(['jaoa', 'svis', 'dald', 'weuf']);
+			setOrientations([...res.orientations, spotLetters]);
+			setBoardWords(res.words);
+			setBoardLoaded(true);
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
-	// useEffect(() => {
-	// 	setLoaded(true);
-	// 	setBoardLoaded(false);
-	// 	let isSubscribed = true;
-	// 	fetchLetterBoard()
-	// 		.then(res => {
-	// 			res = res.json();
-	// 			console.log('I run');
-	// 		})
-	// 		.then(res => {
-	// 			if (isSubscribed) {
-	// 				setLetterBoard(res.letters);
-	// 				setOrientations([...res.orientations, spotLetters]);
-	// 				setBoardWords(res.words);
-	// 				setBoardLoaded(true);
-	// 				console.log(res.words);
-	// 			}
-	// 		})
-	// 		.catch(err => (isSubscribed ? setError(err.toString()) : null));
-	// 	return () => (isSubscribed = false);
-	// }, []);
-
-	// useEffect(() => {
-	// 	(async () => {
-	// 		let res = await fetch('/api/letterboards/');
-	// 		res = await res.json();
-	// 		setLetterBoard(res.letters);
-	// 		setOrientations([...res.orientations, spotLetters]);
-	// 		setBoardWords(res.words);
-	// 		setBoardLoaded(true);
-	// 		setMyUserId((await authenticate()).id);
-	// 	})();
-	// }, []);
+	useEffect(() => {
+		fetchLetterBoard();
+	}, []);
 
 	const findArrIdxInArr = (array, item) => {
 		let idx;
@@ -177,35 +150,6 @@ export default function LetterBoard() {
 		setSelectedLetters([]);
 	};
 
-	if (boardLoaded) {
-		setLetterBoard(
-			letterBoard.map((row, rowNum) => {
-				console.log(typeof row, row);
-				if (typeof row !== 'string') return null;
-				return (
-					<div key={`row${rowNum}`} className='gridRow'>
-						{row.split('').map((letter, colNum) => {
-							return (
-								<div
-									data-location={[colNum, rowNum]}
-									key={[colNum, rowNum]}
-									className='letterContainer'
-									value={letter}
-									id={[colNum, rowNum]}
-									onClick={handleLetterClick}
-								>
-									<div className='letter' value={letter} key={[colNum, rowNum, 'letter']}>
-										{letter.toUpperCase()}
-									</div>
-								</div>
-							);
-						})}
-					</div>
-				);
-			})
-		);
-	}
-
 	return (
 		<>
 			{loaded && (
@@ -214,7 +158,32 @@ export default function LetterBoard() {
 						<p>{gameMessage}</p>
 					</div>
 					<div id='letterGridContainer'>
-						<div id='letterGrid'>{letterBoard}</div>
+						<div id='letterGrid'>
+							{letterBoard.map((row, rowNum) => {
+								return (
+									boardLoaded && (
+										<div key={`row${rowNum}`} className='gridRow'>
+											{row.split('').map((letter, colNum) => {
+												return (
+													<div
+														data-location={[colNum, rowNum]}
+														key={[colNum, rowNum]}
+														className='letterContainer'
+														value={letter}
+														id={[colNum, rowNum]}
+														onClick={handleLetterClick}
+													>
+														<div className='letter' value={letter} key={[colNum, rowNum, 'letter']}>
+															{letter.toUpperCase()}
+														</div>
+													</div>
+												);
+											})}
+										</div>
+									)
+								);
+							})}
+						</div>
 					</div>
 					<div id='buttonContainer'>
 						<button className='spotWordBtn' onClick={handleWordSubmit}>
