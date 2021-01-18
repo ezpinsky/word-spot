@@ -157,7 +157,15 @@ export default function LetterBoard() {
 			{loaded && (
 				<>
 					<div id='gameContent'>
-						<div id='leftSideBar'></div>
+						<div id='leftSideBar'>
+							<div id='foundWordsContainer'>
+								<div id='foundWords'>
+									{foundWords.map(word => {
+										return <div className='word'>{word}</div>;
+									})}
+								</div>
+							</div>
+						</div>
 						<div id='gameContainer'>
 							<div id='messageContainer'>
 								<p>{gameMessage}</p>
