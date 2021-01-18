@@ -8,12 +8,12 @@ body {
 #locoContainer {
 	display: flex;
 	justify-content: center;
-	padding: 20px;
+	padding-top: 25px;
 }
 
 #logoBackground {
 	background-image: url('../../images/letterGridBackground.jpg');
-	width: 360px;
+	min-width: 360px;
 	height: 110px;
 	border-radius: 43px;
 }

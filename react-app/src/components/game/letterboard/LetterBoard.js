@@ -12,7 +12,7 @@ export default function LetterBoard() {
 	const [selectedLetters, setSelectedLetters] = useState([]);
 	const [spotLetters, setSpotLetters] = useState([]);
 	const [foundWords, setFoundWords] = useState([]);
-	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start Spotting!');
+	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start!');
 	const [score, setScore] = useState(0);
 
 	const foundWordMessages = [
@@ -62,9 +62,8 @@ export default function LetterBoard() {
 	};
 
 	const handleRotateBoardClick = e => {
-		console.log('orientations are ', orientations);
+		deselectLetters(0);
 		const rotatedBoard = orientations.shift();
-		console.log('rotated board is ', rotatedBoard);
 		setLetterBoard(rotatedBoard);
 		setOrientations([...orientations, rotatedBoard]);
 	};
@@ -156,48 +155,68 @@ export default function LetterBoard() {
 		<>
 			{loaded && (
 				<>
-					<div id='gameContainer'>
-						<div id='messageContainer'>
-							<p>{gameMessage}</p>
-						</div>
-						<div id='letterGridContainer'>
-							<div id='letterGrid'>
-								{letterBoard.map((row, rowNum) => {
-									return (
-										boardLoaded && (
-											<div key={`row${rowNum}`} className='gridRow'>
-												{row.split('').map((letter, colNum) => {
-													return (
-														<div
-															data-location={[colNum, rowNum]}
-															key={[colNum, rowNum]}
-															className='letterContainer'
-															value={letter}
-															id={[colNum, rowNum]}
-															onClick={handleLetterClick}
-														>
+					<div id='gameContent'>
+						<div id='leftSideBar'></div>
+						<div id='gameContainer'>
+							<div id='messageContainer'>
+								<p>{gameMessage}</p>
+							</div>
+							<div id='letterGridContainer'>
+								<div id='letterGrid'>
+									{letterBoard.map((row, rowNum) => {
+										return (
+											boardLoaded && (
+												<div key={`row${rowNum}`} className='gridRow'>
+													{row.split('').map((letter, colNum) => {
+														return (
 															<div
-																className='letter'
+																data-location={[colNum, rowNum]}
+																key={[colNum, rowNum]}
+																className='letterContainer'
 																value={letter}
-																key={[colNum, rowNum, 'letter']}
+																id={[colNum, rowNum]}
+																onClick={handleLetterClick}
 															>
-																{letter.toUpperCase()}
+																<div
+																	className='letter'
+																	value={letter}
+																	key={[colNum, rowNum, 'letter']}
+																>
+																	{letter.toUpperCase()}
+																</div>
 															</div>
-														</div>
-													);
-												})}
-											</div>
-										)
-									);
-								})}
+														);
+													})}
+												</div>
+											)
+										);
+									})}
+								</div>
+							</div>
+							<div id='buttonsContainer'>
+								<div id='buttonsInnerContainer'>
+									<div id='btnSpacerDiv'>
+										<div className='btn rotateBoardBtn' onClick={handleRotateBoardClick}>
+											<i className='fas fa-sync-alt'></i>
+										</div>
+									</div>
+									<div id='selectedLettersContainer'>{spotLetters}</div>
+									<div className='btn spotWordBtn' onClick={handleWordSubmit}>
+										Spot
+									</div>
+								</div>
 							</div>
 						</div>
-						<div id='buttonsContainer'>
-							<div className='btn spotWordBtn' onClick={handleWordSubmit}>
-								Spot Word
-							</div>
-							<div className='btn rotateBoardBtn' onClick={handleRotateBoardClick}>
-								<i className='fas fa-sync-alt'></i>
+						<div id='rightSideBar'>
+							<div id='rightSideBarBtnContainer'>
+								<div className='btn rightSideBarBtn'>
+									<p> Next Board</p>
+									<i class='fas fa-long-arrow-alt-right arrowIcon'></i>
+								</div>
+								<div className='btn rightSideBarBtn'>
+									<p> Create New</p>
+									<i class='fas fa-puzzle-piece'></i>
+								</div>
 							</div>
 						</div>
 					</div>
