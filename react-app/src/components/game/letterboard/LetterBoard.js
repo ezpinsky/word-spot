@@ -76,9 +76,11 @@ export default function LetterBoard() {
 				letterEle.classList.remove('selectedLetter');
 			});
 			setSelectedLetters([]);
+			setSpotLetters('');
 			return;
 		} else {
 			const deselectedLetters = selectedLetters.slice(idx, selectedLetters.length);
+			setSpotLetters(spotLetters.slice(0, idx));
 			setSelectedLetters(selectedLetters.slice(0, idx));
 			deselectedLetters.forEach(deselectedLetter => {
 				let deselected = document.getElementById(deselectedLetter.toString());
@@ -152,21 +154,40 @@ export default function LetterBoard() {
 		setSelectedLetters([]);
 	};
 
+	const updateFoundWordsScroll = () => {
+		const wordsDiv = document.getElementById('foundWords');
+		wordsDiv.scrollTop = wordsDiv.scrollHeight;
+	};
+
+	useEffect(() => {
+		if (foundWords.length > 0) {
+			updateFoundWordsScroll();
+		}
+	}, [foundWords]);
+
 	return (
 		<>
 			{loaded && (
 				<>
 					<div id='gameContent'>
 						<div id='leftSideBar'>
-							<div id='foundWordsContainer'>
-								<div id='foundWords'>
-									{foundWords.map(word => {
-										return <div className='word'>{word}</div>;
-									})}
+							<div id='foundWordsWrapper'>
+								<div id='foundWordsContainer'>
+									<div id='foundWordsTitle'>Spotted Words</div>
+									<text id='foundWords'>
+										{foundWords.map(word => {
+											return <p>{word}</p>;
+										})}
+									</text>
 								</div>
 							</div>
 						</div>
 						<div id='gameContainer'>
+							<div id='logoContainer'>
+								<div id='logoBackground'>
+									<div id='logo'></div>
+								</div>
+							</div>
 							<div id='messageContainer'>
 								<p>{gameMessage}</p>
 							</div>
@@ -220,11 +241,11 @@ export default function LetterBoard() {
 							<div id='rightSideBarBtnContainer'>
 								<div className='btn rightSideBarBtn'>
 									<p> Next Board</p>
-									<i class='fas fa-long-arrow-alt-right arrowIcon'></i>
+									<i className='fas fa-long-arrow-alt-right arrowIcon'></i>
 								</div>
 								<div className='btn rightSideBarBtn'>
 									<p> Create New</p>
-									<i class='fas fa-puzzle-piece'></i>
+									<i className='fas fa-puzzle-piece'></i>
 								</div>
 							</div>
 						</div>

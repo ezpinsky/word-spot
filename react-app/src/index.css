@@ -130,3 +130,23 @@ body {
 #root {
 	height: 100vh;
 }
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background-color: rgb(250, 229, 204);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #b0895a;
+	border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(136, 110, 75);
+}
