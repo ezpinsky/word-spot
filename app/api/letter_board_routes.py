@@ -12,13 +12,18 @@ def new_letter_board():
   user_id = current_user.get_id()
   user = User.query.get(user_id)
   if not user.last_played_id:
-    user.last_played_id
+    user.last_played_id = 1
     new_board = Letter_Board.query.get(1)
+    db.session.commit()
     return new_board.to_dict()
   new_id = user.last_played_id + 1
   user.last_played_id = new_id
   new_board = Letter_Board.query.get(new_id)
-  return new_board.to_dict
+  if not new_board:
+    user.last_played_id = 1
+    new_board = Letter_Board.query.get(1)
+  db.session.commit()
+  return new_board.to_dict()
 
 
 @letter_board_routes.route('/<int:id>/')

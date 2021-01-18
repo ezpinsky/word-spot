@@ -77,12 +77,7 @@ export default function LetterBoard() {
 	const fetchLetterBoard = async id => {
 		setLoaded(true);
 		try {
-			let res;
-			if (!id) {
-				res = await fetch('/api/letterboards/');
-			} else {
-				res = await fetch(`/api/letterboards/${id + 1}`);
-			}
+			let res = await fetch('/api/letterboards/');
 			if (!res.ok) throw res;
 			res = await res.json();
 			setLetterBoard(res.letters);
@@ -132,8 +127,12 @@ export default function LetterBoard() {
 	};
 
 	const handleNextBoardClick = () => {
+		// figure out score
 		fetchLetterBoard();
+		setFoundWords([]);
 	};
+
+	const handleHintClick = () => {};
 
 	//handles new move and deselection
 	useEffect(() => {
@@ -184,7 +183,7 @@ export default function LetterBoard() {
 									<div id='foundWordsTitle'>Spotted Words</div>
 									<div id='foundWords'>
 										{foundWords.map(word => {
-											return <p>{word}</p>;
+											return <p key={word}>{word}</p>;
 										})}
 									</div>
 								</div>
@@ -234,8 +233,13 @@ export default function LetterBoard() {
 							<div id='buttonsContainer'>
 								<div id='buttonsInnerContainer'>
 									<div id='btnSpacerDiv'>
-										<div className='btn rotateBoardBtn' onClick={handleRotateBoardClick}>
+										<div className='btn helpBtn' onClick={handleRotateBoardClick}>
 											<i className='fas fa-sync-alt'></i>
+										</div>
+									</div>
+									<div id='btnSpacerDiv'>
+										<div className='btn helpBtn' onClick={handleHintClick}>
+											<i class='fas fa-question'></i>
 										</div>
 									</div>
 									<div id='selectedLettersContainer'>{spotLetters}</div>
