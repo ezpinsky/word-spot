@@ -156,43 +156,49 @@ export default function LetterBoard() {
 		<>
 			{loaded && (
 				<>
-					<div id='messageContainer'>
-						<p>{gameMessage}</p>
-					</div>
-					<div id='letterGridContainer'>
-						<div id='letterGrid'>
-							{letterBoard.map((row, rowNum) => {
-								return (
-									boardLoaded && (
-										<div key={`row${rowNum}`} className='gridRow'>
-											{row.split('').map((letter, colNum) => {
-												return (
-													<div
-														data-location={[colNum, rowNum]}
-														key={[colNum, rowNum]}
-														className='letterContainer'
-														value={letter}
-														id={[colNum, rowNum]}
-														onClick={handleLetterClick}
-													>
-														<div className='letter' value={letter} key={[colNum, rowNum, 'letter']}>
-															{letter.toUpperCase()}
+					<div id='gameContainer'>
+						<div id='messageContainer'>
+							<p>{gameMessage}</p>
+						</div>
+						<div id='letterGridContainer'>
+							<div id='letterGrid'>
+								{letterBoard.map((row, rowNum) => {
+									return (
+										boardLoaded && (
+											<div key={`row${rowNum}`} className='gridRow'>
+												{row.split('').map((letter, colNum) => {
+													return (
+														<div
+															data-location={[colNum, rowNum]}
+															key={[colNum, rowNum]}
+															className='letterContainer'
+															value={letter}
+															id={[colNum, rowNum]}
+															onClick={handleLetterClick}
+														>
+															<div
+																className='letter'
+																value={letter}
+																key={[colNum, rowNum, 'letter']}
+															>
+																{letter.toUpperCase()}
+															</div>
 														</div>
-													</div>
-												);
-											})}
-										</div>
-									)
-								);
-							})}
+													);
+												})}
+											</div>
+										)
+									);
+								})}
+							</div>
 						</div>
-					</div>
-					<div id='buttonsContainer'>
-						<div className='btn spotWordBtn' onClick={handleWordSubmit}>
-							Spot Word
-						</div>
-						<div className='btn rotateBoardBtn' onClick={handleRotateBoardClick}>
-							<i className='fas fa-sync-alt'></i>
+						<div id='buttonsContainer'>
+							<div className='btn spotWordBtn' onClick={handleWordSubmit}>
+								Spot Word
+							</div>
+							<div className='btn rotateBoardBtn' onClick={handleRotateBoardClick}>
+								<i className='fas fa-sync-alt'></i>
+							</div>
 						</div>
 					</div>
 				</>

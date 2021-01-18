@@ -1,23 +1,29 @@
-#logo {
-	/* margin: auto; */
-	/* text-align: center; */
-	margin: 0;
-}
-
-#background {
+body {
 	width: 100%;
-	height: 100%;
 	margin: 0;
 	background-image: url('../../images/gameBackground.jpg');
 	background-size: cover;
-	/* background-position: center; */
+}
+
+#locoContainer {
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+}
+
+#logoBackground {
+	background-image: url('../../images/letterGridBackground.jpg');
+	width: 360px;
+	height: 110px;
+	border-radius: 43px;
 }
 
 #logo {
-	/* background-image: url(../../images/word-spot-logo.png);
+	background-image: url(../../images/wordspot-logo-v2.png);
 	background-position: center;
-	background-size: cover;
-	width: 500px;
-	height: 200px;
-	background-repeat: no-repeat; */
+	background-size: 375px 375px;
+	width: 360px;
+	height: 110px;
+	border-radius: 43px;
+	background-repeat: no-repeat;
 }

@@ -1,11 +1,14 @@
+#gameContainer {
+}
+
 #letterGridContainer {
 	display: flex;
 	justify-content: center;
 }
 
 #letterGrid {
-	min-width: 700px;
-	min-height: 700px;
+	min-width: 600px;
+	min-height: 600px;
 	display: flex;
 	flex-direction: column;
 	border: 3px solid rgb(177, 151, 95);
@@ -13,7 +16,7 @@
 	padding: 20px;
 	box-shadow: 4px 4px 10px;
 	background-image: url('../../../images/letterGridBackground.jpg');
-	background-position-x: -200px;
+	background-position-x: -132px;
 }
 
 .gridRow {
@@ -24,8 +27,8 @@
 }
 
 .letterContainer {
-	width: 135px;
-	height: 135px;
+	width: 115px;
+	height: 115px;
 	border: 7px solid burlywood;
 	border-radius: 15px;
 	background-image: url('../../../images/letterBackground.jpg');
@@ -62,12 +65,12 @@
 #buttonsContainer {
 	display: flex;
 	justify-content: center;
+	padding: 20px;
 }
 
 .btn {
 	font-family: 'Raleway';
-	margin: 20px;
-	background-color: burlywood;
+	background-color: #deb887;
 	text-align: center;
 	line-height: 1px;
 	font-weight: 800;
@@ -106,4 +109,9 @@
 	color: rgb(136, 110, 75);
 	user-select: none;
 	/* text-shadow: 3px 4px rgb(136, 110, 75); */
+}
+
+#messageContainer p {
+	margin: 0;
+	padding: 20px;
 }
