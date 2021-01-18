@@ -43,10 +43,10 @@ def neighbors(x, y):
 
 
 def matrixize(letters):
-  queue_letters = deque(letters)
+  matrix_letters = deque(letters)
   for i in range(4, 15, 5):
-    queue_letters.insert(i, ' ')
-  return ''.join(list(queue_letters)).split(' ')
+    matrix_letters.insert(i, ' ')
+  return ''.join(list(matrix_letters)).split(' ')
 
 
 # function to find every orientation of letters
@@ -54,17 +54,20 @@ def orientation_generator(letters, words, prefixes):
   count = 0
   rotated_orientations = set()
   letters = ''.join(letters.split(' '))
-  for orientation in itertools.permutations(letters):
+  for orientation in itertools.permutations(letters):  # ('a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'd', 'd', 'd', 'd')
     count += 1
     if orientation not in rotated_orientations:
-      orientation = matrixize(orientation)
+      rotated_orientations.add(orientation)  # adds orientation to memo
+      rotating_orientation = [list(chars) for chars in matrixize(orientation)]  # formats data for roation into list of lists
+
     # gets all rotations for memoization cuts permuations by 75%
       for z in range(3):
-        orientation = ' '.join([''.join(list_chars) for list_chars in [list(tup_chars) for tup_chars in list(zip(*reversed(orientation)))]])
-        rotated_orientations.add(orientation)
-      found_words = set([a[0] for a in find_words(orientation.split(' '), words, prefixes)])  # gets all unique words that were found using set
+        rotating_orientation = [list(chars) for chars in zip(*rotating_orientation[::-1])]  # rotates matrix clockwise
+        rotated_orientations.add(tuple(''.join([''.join(list_chars) for list_chars in rotating_orientation])))  # formats rotated orientation to add to memo
+
+      found_words = set([a[0] for a in find_words(rotating_orientation, words, prefixes)])  # gets all unique words that were found using set
       num_words = len(found_words)  # checks all words for orientation
-      yield orientation, num_words, found_words, count
+      yield matrixize(orientation), num_words, found_words, count
 
 
 def find_suitable_orientation(letters):  # 'aaaa bbbb cccc dddd'
@@ -86,8 +89,8 @@ def find_suitable_orientation(letters):  # 'aaaa bbbb cccc dddd'
   max = (0,)
   for orientation, num_words, found_words, count in orientation_generator(letters, words, prefixes):
     if num_words > max[0]:
-      max = num_words, orientation.split(' '), found_words, count
-    if num_words >= 120 or count >= 10000:  # Only allows to run for maximum of 10 seconds
+      max = num_words, orientation, found_words, count
+    if num_words >= 120 or count >= 1:  # Only allows to run for maximum of 10 seconds
       return max
 
 
@@ -104,12 +107,13 @@ def find_all_words(letters):
 # print('longest word is', max(grid_words, key=lambda word: len(word)))  # longest word
 
 
-def find_all_rotations(letters):
-  letters = ' '.join(letters)
+def find_all_rotations(orientation):
+  orientation = [list(chars) for chars in orientation]  # turns input into correct format: a list of lists
   rotated_orientations = []
   for z in range(3):
-    print(letters)
-    letters = ''.join([''.join(list(tup_chars)) for tup_chars in list(zip(*reversed(letters)))]).split(' ')
-    rotated_orientations.append(letters)
-    letters = ' '.join(letters)
+    orientation = [list(chars) for chars in zip(*orientation[::-1])]  # rotates by passing a reversed version into zip
+    rotated_orientations.append([''.join(list_chars) for list_chars in orientation])
   return rotated_orientations
+
+
+# print(find_suitable_orientation('aaaa bbbb cccc dddd'))

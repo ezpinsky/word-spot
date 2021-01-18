@@ -5,7 +5,6 @@ export default function LetterBoard() {
 	const [myUserId, setMyUserId] = useState(null);
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
-	const [error, setError] = useState('');
 	const [letterBoard, setLetterBoard] = useState([]);
 	const [orientations, setOrientations] = useState([]);
 	const [boardWords, setBoardWords] = useState([]);
@@ -32,7 +31,7 @@ export default function LetterBoard() {
 			if (!res.ok) throw res;
 			res = await res.json();
 			setLetterBoard(res.letters);
-			setOrientations([...res.orientations, spotLetters]);
+			setOrientations([...res.orientations, res.letters]);
 			setBoardWords(res.words);
 			setBoardLoaded(true);
 		} catch (err) {
@@ -60,6 +59,14 @@ export default function LetterBoard() {
 			.split(',')
 			.map(strNum => parseInt(strNum, 10));
 		setSelection(newMove);
+	};
+
+	const handleRotateBoardClick = e => {
+		console.log('orientations are ', orientations);
+		const rotatedBoard = orientations.shift();
+		console.log('rotated board is ', rotatedBoard);
+		setLetterBoard(rotatedBoard);
+		setOrientations([...orientations, rotatedBoard]);
 	};
 
 	const deselectLetters = idx => {
@@ -131,9 +138,6 @@ export default function LetterBoard() {
 		// if already found word then unselect and play different noise
 		// change gameplay message above board to You already spotted that word!
 		if (foundWords.indexOf(submittedWord) >= 0) {
-			console.log('found words are: ', foundWords);
-			console.log('submitted word is: ', submittedWord);
-			console.log(foundWords.indexOf(submittedWord));
 			setGameMessage("You've Already Found That Word! Try Again!");
 		} else if (boardWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
 			let randomMessage = foundWordMessages[Math.floor(Math.random() * foundWordMessages.length)];
@@ -183,10 +187,13 @@ export default function LetterBoard() {
 							})}
 						</div>
 					</div>
-					<div id='buttonContainer'>
-						<button className='spotWordBtn' onClick={handleWordSubmit}>
-							Spot
-						</button>
+					<div id='buttonsContainer'>
+						<div className='btn spotWordBtn' onClick={handleWordSubmit}>
+							Spot Word
+						</div>
+						<div className='btn rotateBoardBtn' onClick={handleRotateBoardClick}>
+							<i className='fas fa-sync-alt'></i>
+						</div>
 					</div>
 				</>
 			)}
