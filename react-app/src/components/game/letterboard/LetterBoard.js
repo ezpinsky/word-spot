@@ -63,6 +63,7 @@ export default function LetterBoard() {
 
 	const handleRotateBoardClick = e => {
 		deselectLetters(0);
+		setSpotLetters('');
 		const rotatedBoard = orientations.shift();
 		setLetterBoard(rotatedBoard);
 		setOrientations([...orientations, rotatedBoard]);
@@ -121,9 +122,9 @@ export default function LetterBoard() {
 			setSpotLetters([...spotLetters, newLetter]);
 			newMoveEle.classList.add('selectedLetter');
 		}
-		console.log(newMoveEle.getBoundingClientRect());
 	}, [selection]);
 
+	// console.log(newMoveEle.getBoundingClientRect());
 	// sudo code for algo to determine where to put a line connecting lines
 	// e.target.getBoundingClientRect())
 	// get x,y range of letter clicked on
