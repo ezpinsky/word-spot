@@ -175,7 +175,7 @@ export default function LetterBoard() {
 	const handleCreateBoardClick = async () => {
 		setErrorMessages(false);
 		let letters = letterBoard.join('');
-		setGameMessage('Checking over 80,000 orientations of your letters');
+		setGameMessage('Checking over 40,000 orientations of your letters');
 		let res = await newLetterBoard(letters);
 		// show letters and spaces in grid at rand locations with timer
 		//show message tthat algo running etc.
