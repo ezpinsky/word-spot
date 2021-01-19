@@ -225,6 +225,6 @@ WordSpot is a fast-paced word-finding game similar to boggle but with a powerful
 - React
 - React-router-dom
 - SQLAlchemy
-- [PyEnchant](http://pyenchant.github.io/pyenchant/) (for spellcheck)
-- [PyDictionary](https://pypi.org/project/PyDictionary/) (for word hints)
+- [synonyms](https://www.npmjs.com/package/synonyms) (for word hints)
+- [word-definition](https://www.npmjs.com/package/word-definition) (for word hints)
 - [werkzeug](https://werkzeug.palletsprojects.com/en/1.0.x/) (for password security)
