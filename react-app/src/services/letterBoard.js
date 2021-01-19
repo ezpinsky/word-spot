@@ -1,4 +1,4 @@
-export const newLetterBoard = async letters => {
+export default async function newLetterBoard(letters) {
 	try {
 		let res = await fetch('/api/letterboards/', {
 			method: 'POST',
@@ -14,4 +14,4 @@ export const newLetterBoard = async letters => {
 	} catch (err) {
 		console.error(err);
 	}
-};
+}
