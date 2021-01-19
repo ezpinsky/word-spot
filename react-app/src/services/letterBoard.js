@@ -1,4 +1,4 @@
-const newLetterBoard = async letters => {
+export const newLetterBoard = async letters => {
 	try {
 		let res = await fetch('/api/letterboards/', {
 			method: 'POST',
@@ -15,5 +15,3 @@ const newLetterBoard = async letters => {
 		console.error(err);
 	}
 };
-
-module.exports = newLetterBoard;
