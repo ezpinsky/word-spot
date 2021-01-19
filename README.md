@@ -157,7 +157,7 @@ WordSpot is a fast-paced word-finding game similar to boggle but with a powerful
 
 - Music
 - SoundEffects
-- Timed
+- Timer
 - User Info Edit
 
 ### 9. FriendsList
