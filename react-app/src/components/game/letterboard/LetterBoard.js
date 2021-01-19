@@ -111,9 +111,11 @@ export default function LetterBoard() {
 
 	const handleWordSubmit = () => {
 		let submittedWord = spotLetters.join('');
-		if (foundWords.indexOf(submittedWord) >= 0) {
+		let foundWordsIdx = foundWords.indexOf(submittedWord);
+		let boardWordsIdx = boardWords.indexOf(submittedWord);
+		if (foundWordsIdx >= 0) {
 			setGameMessage("You've Already Found That Word! Try Again!");
-		} else if (boardWords.indexOf(submittedWord) >= 0 && foundWords.indexOf(submittedWord) < 0) {
+		} else if (boardWordsIdx >= 0 && foundWordsIdx < 0) {
 			let randomMessage = foundWordMessages[Math.floor(Math.random() * foundWordMessages.length)];
 			setGameMessage(randomMessage);
 			setFoundWords([...foundWords, submittedWord]);
@@ -126,9 +128,9 @@ export default function LetterBoard() {
 		setSelectedLetters([]);
 	};
 
-	const handleNextBoardClick = () => {
+	const handleNextBoardClick = async () => {
 		// figure out score
-		fetchLetterBoard();
+		await fetchLetterBoard();
 		setFoundWords([]);
 	};
 

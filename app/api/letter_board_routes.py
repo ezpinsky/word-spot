@@ -31,3 +31,8 @@ def new_letter_board():
 def get_letter_board(id):
   letter_board = Letter_Board.query.get(id)
   return letter_board.to_dict()
+
+
+@letter_board_routes.route('/')
+@login_required
+def create_letter_board():
