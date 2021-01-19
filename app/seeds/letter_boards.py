@@ -4,7 +4,7 @@ from app.models import Letter_Board, db
 
 def seed_letter_boards():
   letter_boards = [['hleo', 'aper', 'diua', 'udrt'], ['sayd', 'iunt', 'bsep', 'oris'], ['xsil', 'dend', 'peyr', 'okaa'],
-                   ['ankle', 'alai', 'kbts', 'eeas'], ['pgah', 'slai', 'eraw', 'vnoe'], ['etar', 'rsaw', 'pcvo', 'lsex'],
+                   ['ankl', 'alai', 'kbts', 'eeas'], ['pgah', 'slai', 'eraw', 'vnoe'], ['etar', 'rsaw', 'pcvo', 'lsex'],
                    ['mafd', 'poee', 'rdsk', 'eeap'], ['ytui', 'ehai', 'solj', 'spli'], ['voak', 'esnm', 'sahl', 'loef'],
                    ['siox', 'cgny', 'sahl', 'itza']
                    ]

@@ -15,16 +15,18 @@
 	align-items: flex-end;
 	justify-content: space-around;
 	flex-direction: column;
+	user-select: none;
 }
 
 #foundWordsContainer {
-	margin-right: 50px;
+	margin-right: 150px;
 	margin-top: 200px;
 }
 
 #foundWordsTitle {
 	width: 250px;
-	height: 45px;
+	height: 70px;
+	text-align: center;
 	margin-bottom: -5px;
 	border-top: 4px solid rgb(177, 151, 95);
 	border-left: 4px solid rgb(177, 151, 95);
@@ -48,7 +50,7 @@
 
 #foundWords {
 	width: 250px;
-	height: 250px;
+	height: 350px;
 	font-family: 'Raleway';
 	color: rgb(136, 110, 75);
 	font-size: 18px;
@@ -67,7 +69,7 @@
 p {
 	margin: 2px;
 	line-height: 20px;
-	padding: 2px 0 0 2px;
+	padding: 2px 0 0 5px;
 }
 
 #gameContainer {
@@ -78,16 +80,17 @@ p {
 	display: flex;
 	justify-content: center;
 	font-family: 'Raleway';
-	font-size: 30px;
+	font-size: 20px;
 	font-weight: 900;
 	color: rgb(136, 110, 75);
 	user-select: none;
+	text-align: center;
 }
 
 #messageContainer p {
-	margin: 0;
 	padding: 20px 0;
 	transition: 0.5s;
+	line-height: 25px;
 }
 
 #letterGridContainer {
@@ -163,6 +166,7 @@ p {
 	display: flex;
 	justify-content: space-between;
 }
+
 .btn {
 	font-family: 'Raleway';
 	background-color: #deb887;
@@ -181,11 +185,15 @@ p {
 	align-items: center;
 }
 
-#btnSpacerDiv {
-	width: 100px;
+.btn:hover {
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.rotateBoardBtn {
+#btnSpacerDiv {
+	width: 40px;
+}
+
+.helpBtn {
 	font-size: 30px;
 	width: 50px;
 	height: 50px;
@@ -209,8 +217,37 @@ p {
 	user-select: none;
 }
 
+#inputContainer {
+	width: 400px;
+	height: 50px;
+	font-family: 'Raleway';
+	color: rgb(136, 110, 75);
+	line-height: 1px;
+	font-size: 30px;
+	font-weight: 800;
+	background-color: rgb(250, 229, 204);
+	border: 4px solid burlywood;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+}
+
+#inputContainer:focus {
+	outline: none;
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .spotWordBtn {
-	width: 100px;
+	width: 110px;
+	height: 50px;
+	font-size: 35px;
+	user-select: none;
+}
+
+.createBoardBtn {
+	width: 140px;
 	height: 50px;
 	font-size: 35px;
 	user-select: none;
@@ -236,7 +273,8 @@ p {
 	display: flex;
 	justify-content: space-evenly;
 	font-size: 23px;
-	margin-left: 50px;
+	margin-left: 150px;
+	user-select: none;
 }
 
 .arrowIcon {
