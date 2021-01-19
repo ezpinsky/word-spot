@@ -9,7 +9,7 @@ def is_valid_letter_board(form, field):
   print('Checking if letter board was formatted correctly.', field.data)
   letters = form.data['letters']
 
-  if len(letters) is not 16:
+  if len(letters) != 16:
     raise ValidationError('LetterBoard must be exactly 16 letters.')
 
   if not all(letter.isalpha() for letter in letters):
