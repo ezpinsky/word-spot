@@ -1,6 +1,5 @@
 import './letterboard.css';
 import React, { useEffect, useState } from 'react';
-import createLetterBoard from '../../../services/letterBoard';
 import newLetterBoard from '../../../services/letterBoard';
 
 export default function LetterBoard() {
@@ -176,9 +175,7 @@ export default function LetterBoard() {
 	const handleCreateBoardClick = async () => {
 		setErrorMessages(false);
 		let letters = letterBoard.join('');
-		setGameMessage(
-			'Finding the most suitable orientation for your grid from over 40,000 orientations...'
-		);
+		setGameMessage('Checking over 80,000 orientations of your letters');
 		let res = await newLetterBoard(letters);
 		// show letters and spaces in grid at rand locations with timer
 		//show message tthat algo running etc.
@@ -243,7 +240,9 @@ export default function LetterBoard() {
 						<div id='leftSideBar'>
 							<div id='foundWordsWrapper'>
 								<div id='foundWordsContainer'>
-									<div id='foundWordsTitle'>Spotted Words</div>
+									<div id='foundWordsTitle'>
+										Spotted Words {`${foundWords.length}/${boardWords.length}`}
+									</div>
 									<div id='foundWords'>
 										{foundWords.map(word => {
 											return <p key={word}>{word}</p>;

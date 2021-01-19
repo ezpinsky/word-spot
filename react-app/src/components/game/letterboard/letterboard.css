@@ -25,7 +25,8 @@
 
 #foundWordsTitle {
 	width: 250px;
-	height: 45px;
+	height: 70px;
+	text-align: center;
 	margin-bottom: -5px;
 	border-top: 4px solid rgb(177, 151, 95);
 	border-left: 4px solid rgb(177, 151, 95);
