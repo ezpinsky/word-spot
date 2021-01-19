@@ -1,9 +1,9 @@
 from app.models import db, User, Letter_Board
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_login import login_required, current_user
 from .auth_routes import validation_errors_to_error_messages
-from ..forms import is_letter_board_formatted
-from ..api.utils import find_all_rotations, find_all_words
+from ..forms import Letter_Board_Form
+from ..api.utils import find_all_rotations, find_all_words, matrixize, find_suitable_orientation
 
 letter_board_routes = Blueprint('letterboards', __name__)
 
@@ -38,14 +38,15 @@ def get_letter_board(id):
 @letter_board_routes.route('/', methods=['POST'])
 @login_required
 def create_letter_board():
-  form = is_letter_board_formatted()
+  form = Letter_Board_Form()
   print("this is the request.json():", request.get_json())
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
+    formatted_letters = ' '.join(matrixize(form.data['letters']))
+    suitable_orientation = find_suitable_orientation(formatted_letters)
     user = current_user.get_id()
-    created_letters = from.data['letters']
-    created_letter_board = Letter_Board(user_id=user, letters=created_letters, words=find_all_words(created_letters), orientations=find_all_rotations(created_letters))
-    db.session.add(create_letter_board)
+    created_letter_board = Letter_Board(user_id=user, letters=suitable_orientation[1], words=list(suitable_orientation[2]), orientations=find_all_rotations(suitable_orientation[1]))
+    db.session.add(created_letter_board)
     db.session.commit()
     return created_letter_board.to_dict()
   return {'errors': validation_errors_to_error_messages(form.errors)}

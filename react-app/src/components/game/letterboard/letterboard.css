@@ -79,7 +79,7 @@ p {
 	display: flex;
 	justify-content: center;
 	font-family: 'Raleway';
-	font-size: 25px;
+	font-size: 22px;
 	font-weight: 900;
 	color: rgb(136, 110, 75);
 	user-select: none;
@@ -89,6 +89,7 @@ p {
 	margin: 0;
 	padding: 20px 0;
 	transition: 0.5s;
+	line-height: 25px;
 }
 
 #letterGridContainer {
@@ -164,6 +165,7 @@ p {
 	display: flex;
 	justify-content: space-between;
 }
+
 .btn {
 	font-family: 'Raleway';
 	background-color: #deb887;
@@ -180,6 +182,10 @@ p {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.btn:hover {
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #btnSpacerDiv {
@@ -210,8 +216,37 @@ p {
 	user-select: none;
 }
 
+#inputContainer {
+	width: 400px;
+	height: 50px;
+	font-family: 'Raleway';
+	color: rgb(136, 110, 75);
+	line-height: 1px;
+	font-size: 30px;
+	font-weight: 800;
+	background-color: rgb(250, 229, 204);
+	border: 4px solid burlywood;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+}
+
+#inputContainer:focus {
+	outline: none;
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .spotWordBtn {
-	width: 100px;
+	width: 110px;
+	height: 50px;
+	font-size: 35px;
+	user-select: none;
+}
+
+.createBoardBtn {
+	width: 140px;
 	height: 50px;
 	font-size: 35px;
 	user-select: none;

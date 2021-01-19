@@ -2,26 +2,33 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired, ValidationError
 from ..models import Letter_Board
+from ..api.utils import matrixize
 
 
-def is_letter_board_formatted(form, field):
-  print('Checking if letters are formatted correctly.', field.data)
-  new_letter_board = field.data
-  if type(new_letter_board) is not list:
-    raise ValidationError('Letters must be in list format.')
+def is_valid_letter_board(form, field):
+  print('Checking if letter board was formatted correctly.', field.data)
+  letters = form.data['letters']
 
-  if len(new_letter_board) is not 4:
-    raise ValidationError('List must have 4 strings.')
+  if len(letters) is not 16:
+    raise ValidationError('LetterBoard must be exactly 16 letters.')
 
-  if len([len(row) for row in new_letter_board if len(row) is 4]) is not 4:
-    raise ValidationError('Each row in list must have 4 letters.')
+  if not all(letter.isalpha() for letter in letters):
+    raise ValidationError('LettersBoard can only contain letters.')
 
   print('Checking if letterBoard has enough vowels.')
-  new_letters = ''.join(field.data)
-  if len[letter for letter in new_letters if letter in ('a', 'e', 'i', 'o', 'u')] is < 6:
+  count = 0
+  for letter in letters:
+   if letter in ('a', 'e', 'i', 'o', 'u'):
+     count += 1
+  if count < 6:
     raise ValidationError('LetterBoard must contain atleast 6 vowels.')
 
   print('Checking if letterBoard already exists', field.data)
-  letter_board = Letter_Board.query.filter(LetterBoard.letters == new_letter_board).first()
+  formatted_letters = matrixize(letters)
+  letter_board = Letter_Board.query.filter(Letter_Board.letters is formatted_letters).first()
   if letter_board:
-    raise ValidationError('This LetterBoard has already been created.')
+    raise ValidationError('This LetterBoard has already been created. Please try different letters.')
+
+
+class Letter_Board_Form(FlaskForm):
+  letters = StringField('letters', validators=[DataRequired(), is_valid_letter_board])

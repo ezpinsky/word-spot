@@ -1,8 +1,9 @@
 import './letterboard.css';
 import React, { useEffect, useState } from 'react';
+import createLetterBoard from '../../../services/letterBoard';
+import newLetterBoard from '../../../services/letterBoard';
 
 export default function LetterBoard() {
-	const [myUserId, setMyUserId] = useState(null);
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
 	const [letterBoard, setLetterBoard] = useState([]);
@@ -13,6 +14,8 @@ export default function LetterBoard() {
 	const [spotLetters, setSpotLetters] = useState([]);
 	const [foundWords, setFoundWords] = useState([]);
 	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start!');
+	const [errorMessages, setErrorMessages] = useState(null);
+	const [newBoardInput, setNewBoardInput] = useState(false);
 	const [score, setScore] = useState(0);
 
 	const foundWordMessages = [
@@ -74,16 +77,31 @@ export default function LetterBoard() {
 		}
 	};
 
+	const clearBoard = () => {
+		setSpotLetters();
+		deselectLetters(0);
+		//future feature to save score
+		setLetterBoard([]);
+		setBoardWords([]);
+		setFoundWords([]);
+		setOrientations([]);
+	};
+
+	const setNewBoard = res => {
+		setGameMessage('Select Any Letter To Start!');
+		setLetterBoard(res.letters);
+		setOrientations([...res.orientations, res.letters]);
+		setBoardWords(res.words);
+		setBoardLoaded(true);
+	};
+
 	const fetchLetterBoard = async id => {
 		setLoaded(true);
 		try {
 			let res = await fetch('/api/letterboards/');
 			if (!res.ok) throw res;
 			res = await res.json();
-			setLetterBoard(res.letters);
-			setOrientations([...res.orientations, res.letters]);
-			setBoardWords(res.words);
-			setBoardLoaded(true);
+			setNewBoard(res);
 		} catch (err) {
 			console.error(err);
 		}
@@ -130,10 +148,53 @@ export default function LetterBoard() {
 
 	const handleNextBoardClick = async () => {
 		// figure out score
+		setNewBoardInput(false);
+		setGameMessage('Select Any Letter To Start!');
 		await fetchLetterBoard();
 		setFoundWords([]);
 	};
 
+	const handleCreateNewClick = () => {
+		clearBoard();
+		setNewBoardInput(true);
+		setGameMessage('Please type 16 letters below using at least 6 vowels.');
+		setLetterBoard(['    ', '    ', '    ', '    ']);
+	};
+
+	const handleInputChange = e => {
+		let letters = e.target.value;
+		while (letters.length < 16) {
+			letters += ' ';
+		}
+		let matrixedLetters = [];
+		for (let i = 0; i < 13; i += 4) {
+			matrixedLetters.push(letters.slice(i, i + 4));
+		}
+		setLetterBoard(matrixedLetters);
+	};
+
+	const handleCreateBoardClick = async () => {
+		setErrorMessages(false);
+		let letters = letterBoard.join('');
+		setGameMessage(
+			'Finding the most suitable orientation for your grid from over 40,000 orientations...'
+		);
+		let res = await newLetterBoard(letters);
+		// show letters and spaces in grid at rand locations with timer
+		//show message tthat algo running etc.
+		//when board comes back show message that new board created
+		//.toLowerCase()
+		if (res.errors) {
+			res.errors.forEach(error =>
+				!errorMessages
+					? setErrorMessages([error.slice(10)])
+					: setErrorMessages([...errorMessages, error.slice(10)])
+			);
+		} else {
+			setNewBoard(res);
+			setNewBoardInput(false);
+		}
+	};
 	const handleHintClick = () => {};
 
 	//handles new move and deselection
@@ -198,7 +259,7 @@ export default function LetterBoard() {
 								</div>
 							</div>
 							<div id='messageContainer'>
-								<p>{gameMessage}</p>
+								<p>{errorMessages || gameMessage}</p>
 							</div>
 							<div id='letterGridContainer'>
 								<div id='letterGrid'>
@@ -234,20 +295,36 @@ export default function LetterBoard() {
 							</div>
 							<div id='buttonsContainer'>
 								<div id='buttonsInnerContainer'>
-									<div id='btnSpacerDiv'>
-										<div className='btn helpBtn' onClick={handleRotateBoardClick}>
-											<i className='fas fa-sync-alt'></i>
-										</div>
-									</div>
-									<div id='btnSpacerDiv'>
-										<div className='btn helpBtn' onClick={handleHintClick}>
-											<i class='fas fa-question'></i>
-										</div>
-									</div>
-									<div id='selectedLettersContainer'>{spotLetters}</div>
-									<div className='btn spotWordBtn' onClick={handleWordSubmit}>
-										Spot
-									</div>
+									{(!newBoardInput && (
+										<>
+											<div id='btnSpacerDiv'>
+												<div className='btn helpBtn' onClick={handleRotateBoardClick}>
+													<i className='fas fa-sync-alt'></i>
+												</div>
+											</div>
+											<div id='btnSpacerDiv'>
+												<div className='btn helpBtn' onClick={handleHintClick}>
+													<i className='fas fa-question'></i>
+												</div>
+											</div>
+											<div id='selectedLettersContainer'>{spotLetters}</div>
+											<div className='btn spotWordBtn' onClick={handleWordSubmit}>
+												Spot
+											</div>
+										</>
+									)) || (
+										<>
+											<input
+												id='inputContainer'
+												autoFocus
+												maxLength='16'
+												onChange={handleInputChange}
+											/>
+											<div className='btn createBoardBtn' onClick={handleCreateBoardClick}>
+												Create
+											</div>
+										</>
+									)}
 								</div>
 							</div>
 						</div>
@@ -257,10 +334,12 @@ export default function LetterBoard() {
 									<p> Next Board</p>
 									<i className='fas fa-long-arrow-alt-right arrowIcon'></i>
 								</div>
-								<div className='btn rightSideBarBtn'>
-									<p> Create New</p>
-									<i className='fas fa-puzzle-piece'></i>
-								</div>
+								{!newBoardInput && (
+									<div className='btn rightSideBarBtn' onClick={handleCreateNewClick}>
+										<p> Create New</p>
+										<i className='fas fa-puzzle-piece'></i>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
