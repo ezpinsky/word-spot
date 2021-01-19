@@ -19,7 +19,7 @@ WordSpot is a fast-paced word-finding game similar to boggle but with a powerful
 ### 3. User Generated LetterBoards
 
 - User creates new board with custom letters
-- Graph search algorithm generates board orientation with most words
+- Depth-first search algorithm generates board orientation with most words
 
 ---
 
