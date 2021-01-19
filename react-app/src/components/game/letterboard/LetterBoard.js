@@ -87,8 +87,8 @@ export default function LetterBoard() {
 		setOrientations([]);
 	};
 
-	const setNewBoard = res => {
-		setGameMessage('Select Any Letter To Start!');
+	const setNewBoard = (res, startMessage) => {
+		setGameMessage(startMessage);
 		setLetterBoard(res.letters);
 		setOrientations([...res.orientations, res.letters]);
 		setBoardWords(res.words);
@@ -101,7 +101,7 @@ export default function LetterBoard() {
 			let res = await fetch('/api/letterboards/');
 			if (!res.ok) throw res;
 			res = await res.json();
-			setNewBoard(res);
+			setNewBoard(res, 'Select Any Letter To Start!');
 		} catch (err) {
 			console.error(err);
 		}
@@ -191,7 +191,7 @@ export default function LetterBoard() {
 					: setErrorMessages([...errorMessages, error.slice(10)])
 			);
 		} else {
-			setNewBoard(res);
+			setNewBoard(res, 'Suitable orientation found! Select a letter to play!');
 			setNewBoardInput(false);
 		}
 	};
