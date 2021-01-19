@@ -132,7 +132,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 8px;
 }
 
 /* Track */
@@ -149,4 +149,8 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: rgb(136, 110, 75);
+}
+
+::-webkit-scrollbar-corner {
+	background-color: transparent;
 }
