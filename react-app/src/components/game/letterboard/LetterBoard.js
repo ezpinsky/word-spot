@@ -148,6 +148,7 @@ export default function LetterBoard() {
 	const handleNextBoardClick = async () => {
 		// figure out score
 		setNewBoardInput(false);
+		setErrorMessages(false);
 		setGameMessage('Select Any Letter To Start!');
 		await fetchLetterBoard();
 		setFoundWords([]);

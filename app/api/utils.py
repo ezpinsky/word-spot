@@ -87,12 +87,19 @@ def find_suitable_orientation(letters):  # 'aaaa bbbb cccc dddd'
                  for i in range(2, len(word) + 1)
                  )
   max = (0,)
+
   for orientation, num_words, found_words, count in orientation_generator(letters, words, prefixes):
     if num_words > max[0]:
       max = num_words, orientation, found_words, count
     if count >= 10000:  # Only allows to run for maximum of 10 seconds
       print(count)
       return max
+
+
+
+
+
+
 
 
 def find_all_words(letters):
