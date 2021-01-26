@@ -2,11 +2,11 @@ import React from 'react';
 import LetterBoard from './letterboard/LetterBoard';
 import './game.css';
 
-export default function Game() {
+export default function Game({ setAuthenticated }) {
 	return (
 		<>
 			<div id='background'>
-				<LetterBoard />
+				<LetterBoard setAuthenticated={setAuthenticated} />
 			</div>
 			<div id='footer'>
 				<a

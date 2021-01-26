@@ -259,6 +259,15 @@ p {
 	align-items: center;
 }
 
+#profile {
+	position: absolute;
+	min-width: 50px;
+	min-height: 25px;
+	width: 12vw;
+	height: 3vw;
+	border: 1px solid black;
+}
+
 #rightSideBarBtnContainer {
 	margin-top: 200px;
 	height: 250px;

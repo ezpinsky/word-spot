@@ -44,7 +44,7 @@ function App() {
 					<User />
 				</ProtectedRoute>
 				<ProtectedRoute path='/' exact={true} authenticated={authenticated}>
-					<Game />
+					<Game authenticated={authenticated} setAuthenticated={setAuthenticated} />
 				</ProtectedRoute>
 			</Switch>
 		</BrowserRouter>

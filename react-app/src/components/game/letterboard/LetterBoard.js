@@ -1,8 +1,9 @@
 import './letterboard.css';
 import React, { useEffect, useState } from 'react';
 import newLetterBoard from '../../../services/letterBoard';
+import LogoutButton from '../../auth/LogoutButton';
 
-export default function LetterBoard() {
+export default function LetterBoard({ setAuthenticated }) {
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
 	const [letterBoard, setLetterBoard] = useState([]);
@@ -106,9 +107,11 @@ export default function LetterBoard() {
 		}
 	};
 
-	useEffect(() => {
-		fetchLetterBoard();
-	}, []);
+	//scrolls to bottom of spotted words box when new word spotted
+	const updateFoundWordsScroll = () => {
+		const wordsDiv = document.getElementById('foundWords');
+		wordsDiv.scrollTop = wordsDiv.scrollHeight;
+	};
 
 	const handleLetterClick = e => {
 		const newMove = e.target // parses the location numbers
@@ -177,11 +180,11 @@ export default function LetterBoard() {
 		setErrorMessages(false);
 		let letters = letterBoard.join('');
 		setGameMessage('Checking over 40,000 orientations of your letters');
-		let res = await newLetterBoard(letters);
 		// show letters and spaces in grid at rand locations with timer
 		//show message tthat algo running etc.
 		//when board comes back show message that new board created
 		//.toLowerCase()
+		let res = await newLetterBoard(letters);
 		if (res.errors) {
 			res.errors.forEach(error =>
 				!errorMessages
@@ -194,6 +197,11 @@ export default function LetterBoard() {
 		}
 	};
 	const handleHintClick = () => {};
+
+	//fetches first letterBoard
+	useEffect(() => {
+		fetchLetterBoard();
+	}, []);
 
 	//handles new move and deselection
 	useEffect(() => {
@@ -221,11 +229,6 @@ export default function LetterBoard() {
 	// set directino based on copmarison of x,y values of click
 	// add child element that is absolutley positioned to the letter box
 	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
-
-	const updateFoundWordsScroll = () => {
-		const wordsDiv = document.getElementById('foundWords');
-		wordsDiv.scrollTop = wordsDiv.scrollHeight;
-	};
 
 	useEffect(() => {
 		if (foundWords.length > 0) {
@@ -329,6 +332,14 @@ export default function LetterBoard() {
 							</div>
 						</div>
 						<div id='rightSideBar'>
+							<div id='profile'>
+								<div>
+									<p></p>
+								</div>
+								<div>
+									<LogoutButton setAuthenticated={setAuthenticated} />
+								</div>
+							</div>
 							<div id='rightSideBarBtnContainer'>
 								<div className='btn rightSideBarBtn' onClick={handleNextBoardClick}>
 									<p> Next Board</p>
