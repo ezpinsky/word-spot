@@ -152,5 +152,5 @@ body {
 }
 
 ::-webkit-scrollbar-corner {
-	background-color: transparent;
+	background-color: rgb(250, 229, 204);
 }

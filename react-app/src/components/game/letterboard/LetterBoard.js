@@ -47,7 +47,7 @@ export default function LetterBoard({ setAuthenticated }) {
 		const validMoves = [];
 		for (let x = startX; x < endX; x++) {
 			for (let y = startY; y < endY; y++) {
-				// this if statement gets around javascript drawback where two objects can only be equal if they point to same object in memory
+				// this if statement sidesteps javascript drawback where two objects can only be equal if they point to same object in memory
 				if (!(lastMove[0] === x && lastMove[1] === y)) {
 					validMoves.push([x, y]);
 				}
@@ -80,7 +80,7 @@ export default function LetterBoard({ setAuthenticated }) {
 	const clearBoard = () => {
 		setSpotLetters();
 		deselectLetters(0);
-		//future feature to save score
+		//future feature to save score here
 		setLetterBoard([]);
 		setBoardWords([]);
 		setFoundWords([]);
@@ -112,6 +112,15 @@ export default function LetterBoard({ setAuthenticated }) {
 		const wordsDiv = document.getElementById('foundWords');
 		wordsDiv.scrollTop = wordsDiv.scrollHeight;
 	};
+
+	/* Pseudocode for selected letters connecting lines */
+	// e.target.getBoundingClientRect()) => returns the x, y location of the clicked letter
+	// get x,y range of letter clicked on
+	// get x,y range of last letter clicked on
+	// set direction based on copmarison of x,y values of click
+	// Option 1: add hidden lines behind board that can be displayed or hidden
+	// Option 2: add child element that is absolutley positioned to the letter box
+	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
 	const handleLetterClick = e => {
 		const newMove = e.target // parses the location numbers
@@ -220,15 +229,6 @@ export default function LetterBoard({ setAuthenticated }) {
 			newMoveEle.classList.add('selectedLetter');
 		}
 	}, [selection]);
-
-	// console.log(newMoveEle.getBoundingClientRect());
-	// sudo code for algo to determine where to put a line connecting lines
-	// e.target.getBoundingClientRect())
-	// get x,y range of letter clicked on
-	// get x,y range of last letter
-	// set directino based on copmarison of x,y values of click
-	// add child element that is absolutley positioned to the letter box
-	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
 	useEffect(() => {
 		if (foundWords.length > 0) {

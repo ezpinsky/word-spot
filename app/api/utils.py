@@ -6,22 +6,22 @@ import time
 
 
 '''
-Stretch goal to ability to dynamically work for a grid size of 3x3 or 4x4
+Stretch goal to make algo dynamically work for a grid size of 3x3 or 4x4
 change out all 4s in the algo for an ncols variable and for the maxtrixise change out the 5 for ncols + 1
 
 '''
 
 
 # enumerate essentially takes an iterable and creates an enumerate object which can be converted to list of tuples with the value of the iterable and the index/count of iteration
-def find_words(grid, words, prefixes):
+def find_all_words_in_grid(grid, words, prefixes):
   for y, row in enumerate(grid):  # loops through each row of letters giving letters in row(row) and row number(y)
     for x, letter in enumerate(row):  # loops through each letter in each row giving letter(letter) and column number(x)
-      for result in pathing(grid, letter, ((x, y),), words, prefixes):
+      for result in find_word(grid, letter, ((x, y),), words, prefixes):
         yield result
 
 
 # path is a tuple of tuples containing coordinates of letters that build the word
-def pathing(grid, prefix, path, words, prefixes):
+def find_word(grid, prefix, path, words, prefixes):
   if prefix in words:  # if this is in our words list then we found a good word and its path
     yield (prefix, path)
 
@@ -32,7 +32,7 @@ def pathing(grid, prefix, path, words, prefixes):
     if (nx, ny) not in path:  # checks if we have already hit this letter location
       prefix1 = prefix + grid[ny][nx]  # adds the new letter to the prefix
       if prefix1 in prefixes:  # if this is not a valid prefix we abandon the path otherwise we recursively continue down path
-        for result in pathing(grid, prefix1, path + ((nx, ny),), words, prefixes):
+        for result in find_word(grid, prefix1, path + ((nx, ny),), words, prefixes):
           yield result
 
 
@@ -65,7 +65,7 @@ def orientation_generator(letters, words, prefixes):
         rotating_orientation = [list(chars) for chars in zip(*rotating_orientation[::-1])]  # rotates matrix clockwise
         rotated_orientations.add(tuple(''.join([''.join(list_chars) for list_chars in rotating_orientation])))  # formats rotated orientation to add to memo
 
-      found_words = set([a[0] for a in find_words(rotating_orientation, words, prefixes)])  # gets all unique words that were found using set
+      found_words = set([a[0] for a in find_all_words_in_grid(rotating_orientation, words, prefixes)])  # gets all unique words that were found using set
       num_words = len(found_words)  # checks all words for orientation
       yield matrixize(orientation), num_words, found_words, count
 
@@ -96,12 +96,6 @@ def find_suitable_orientation(letters):  # 'aaaa bbbb cccc dddd'
       return max
 
 
-
-
-
-
-
-
 def find_all_words(letters):
   grid = letters
   prefix_letters = ''.join(set(''.join(grid)))
@@ -110,7 +104,7 @@ def find_all_words(letters):
   prefixes = set(word[:i] for word in words
                  for i in range(2, len(word) + 1)
                  )
-  grid_words = [item[0] for item in list(find_words(grid, words, prefixes))]
+  grid_words = [item[0] for item in list(find_all_words(grid, words, prefixes))]
   return grid_words
 # print('longest word is', max(grid_words, key=lambda word: len(word)))  # longest word
 
