@@ -244,10 +244,10 @@ export default function LetterBoard({ setAuthenticated }) {
 						<div id='leftSideBar'>
 							<div id='foundWordsWrapper'>
 								<div id='foundWordsContainer'>
-									<div id='foundWordsTitle'>
+									<div id='foundWordsTitle' className='lightFont'>
 										Spotted Words {`${foundWords.length}/${boardWords.length}`}
 									</div>
-									<div id='foundWords'>
+									<div id='foundWords' className='lightBkgrnd'>
 										{foundWords.map(word => {
 											return <p key={word}>{word}</p>;
 										})}
@@ -281,7 +281,7 @@ export default function LetterBoard({ setAuthenticated }) {
 																onClick={handleLetterClick}
 															>
 																<div
-																	className='letter'
+																	className='letter letterLightFont'
 																	value={letter}
 																	key={[colNum, rowNum, 'letter']}
 																>
@@ -301,17 +301,19 @@ export default function LetterBoard({ setAuthenticated }) {
 									{(!newBoardInput && (
 										<>
 											<div id='btnSpacerDiv'>
-												<div className='btn helpBtn' onClick={handleRotateBoardClick}>
+												<div className='btn lightFont helpBtn' onClick={handleRotateBoardClick}>
 													<i className='fas fa-sync-alt'></i>
 												</div>
 											</div>
 											<div id='btnSpacerDiv'>
-												<div className='btn helpBtn' onClick={handleHintClick}>
+												<div className='btn lightFont helpBtn' onClick={handleHintClick}>
 													<i className='fas fa-question'></i>
 												</div>
 											</div>
-											<div id='selectedLettersContainer'>{spotLetters}</div>
-											<div className='btn spotWordBtn' onClick={handleWordSubmit}>
+											<div id='selectedLettersContainer' className='lightBkgrnd'>
+												{spotLetters}
+											</div>
+											<div className='btn lightFont spotWordBtn' onClick={handleWordSubmit}>
 												Spot
 											</div>
 										</>
@@ -319,11 +321,15 @@ export default function LetterBoard({ setAuthenticated }) {
 										<>
 											<input
 												id='inputContainer'
+												className='lightBkgrnd'
 												autoFocus
 												maxLength='16'
 												onChange={handleInputChange}
 											/>
-											<div className='btn createBoardBtn' onClick={handleCreateBoardClick}>
+											<div
+												className='btn lightFont createBoardBtn'
+												onClick={handleCreateBoardClick}
+											>
 												Create
 											</div>
 										</>
@@ -341,12 +347,12 @@ export default function LetterBoard({ setAuthenticated }) {
 								</div>
 							</div>
 							<div id='rightSideBarBtnContainer'>
-								<div className='btn rightSideBarBtn' onClick={handleNextBoardClick}>
-									<p> Next Board</p>
+								<div className='btn lightFont rightSideBarBtn' onClick={handleNextBoardClick}>
+									<p>Next Board</p>
 									<i className='fas fa-long-arrow-alt-right arrowIcon'></i>
 								</div>
 								{!newBoardInput && (
-									<div className='btn rightSideBarBtn' onClick={handleCreateNewClick}>
+									<div className='btn lightFont rightSideBarBtn' onClick={handleCreateNewClick}>
 										<p> Create New</p>
 										<i className='fas fa-puzzle-piece'></i>
 									</div>

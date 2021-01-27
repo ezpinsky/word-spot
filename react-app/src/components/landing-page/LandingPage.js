@@ -9,15 +9,23 @@ export default function LandingPage({ authType, authenticated, setAuthenticated 
 		<>
 			<div id='pageContainer'>
 				<div id='infoContainer'>This is the info</div>
-				<div id='authFormContainer'>
+				<div id='authContainer'>
 					<div id='logoBackground'>
 						<div id='logo'></div>
 					</div>
-					{authType === 'login' ? (
-						<LoginForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
-					) : (
-						<SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
-					)}
+					<div id='authForm'>
+						{authType === 'login' ? (
+							<>
+								<h1 className='lightFont authTitle'>Login</h1>
+								<LoginForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
+							</>
+						) : (
+							<>
+								<h1 className='lightFont'>Sign Up</h1>
+								<SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
+							</>
+						)}
+					</div>
 				</div>
 				<Footer />
 			</div>

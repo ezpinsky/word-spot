@@ -42,15 +42,33 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
 		<form onSubmit={onSignUp}>
 			<div>
 				<label>User Name</label>
-				<input type='text' name='username' onChange={updateUsername} value={username}></input>
+				<input
+					type='text'
+					name='username'
+					onChange={updateUsername}
+					value={username}
+					className='lightBkgrnd authInput'
+				></input>
 			</div>
 			<div>
 				<label>Email</label>
-				<input type='text' name='email' onChange={updateEmail} value={email}></input>
+				<input
+					type='text'
+					name='email'
+					onChange={updateEmail}
+					value={email}
+					className='lightBkgrnd authInput'
+				></input>
 			</div>
 			<div>
 				<label>Password</label>
-				<input type='password' name='password' onChange={updatePassword} value={password}></input>
+				<input
+					type='password'
+					name='password'
+					onChange={updatePassword}
+					value={password}
+					className='lightBkgrnd authInput'
+				></input>
 			</div>
 			<div>
 				<label>Confirm Password</label>
@@ -60,9 +78,12 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
 					onChange={updateRepeatPassword}
 					value={repeatPassword}
 					required={true}
+					className='lightBkgrnd authInput'
 				></input>
 			</div>
-			<button type='submit'>Sign Up</button>
+			<button type='submit' className='btn authBtn'>
+				Sign Up
+			</button>
 		</form>
 	);
 };

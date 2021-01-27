@@ -1,7 +1,7 @@
 #gameContent {
 	display: flex;
 	height: calc(100vh - 185px);
-	/* justify-content: center; */
+	/* -185px in order to center side bars to grid using flex */
 }
 
 #leftSideBar {
@@ -41,8 +41,6 @@
 	font-size: 25px;
 	font-weight: 900;
 	font-family: 'Raleway';
-	color: rgb(250, 229, 204);
-	text-shadow: 2px 3px rgb(136, 110, 75);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -55,8 +53,6 @@
 	color: rgb(136, 110, 75);
 	font-size: 18px;
 	font-weight: 800;
-	background-color: rgb(250, 229, 204);
-	border: 4px solid rgb(177, 151, 95);
 	border-radius: 10px;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
@@ -151,8 +147,6 @@ p {
 	pointer-events: none;
 	font-size: 85px;
 	font-weight: 600;
-	color: rgb(250, 229, 204);
-	text-shadow: 3px 4px rgb(136, 110, 75);
 }
 
 #buttonsContainer {
@@ -165,28 +159,6 @@ p {
 	width: 600px;
 	display: flex;
 	justify-content: space-between;
-}
-
-.btn {
-	font-family: 'Raleway';
-	background-color: #deb887;
-	text-align: center;
-	line-height: 1px;
-	font-weight: 800;
-	color: rgb(250, 229, 204);
-	text-shadow: 2px 3px rgb(136, 110, 75);
-	cursor: pointer;
-	background-image: url('../../../images/letterBackground.jpg');
-	background-position: center;
-	border: 4px solid burlywood;
-	border-radius: 10px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.btn:hover {
-	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #btnSpacerDiv {
@@ -208,8 +180,6 @@ p {
 	line-height: 1px;
 	font-size: 30px;
 	font-weight: 800;
-	background-color: rgb(250, 229, 204);
-	border: 4px solid burlywood;
 	border-radius: 10px;
 	display: flex;
 	justify-content: center;
@@ -225,8 +195,6 @@ p {
 	line-height: 1px;
 	font-size: 30px;
 	font-weight: 800;
-	background-color: rgb(250, 229, 204);
-	border: 4px solid burlywood;
 	border-radius: 10px;
 	display: flex;
 	justify-content: center;
