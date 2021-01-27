@@ -1,0 +1,22 @@
+#pageContainer {
+	display: flex;
+	height: calc(100% - 50px);
+}
+#infoContainer {
+	flex: 2;
+	min-width: 400px;
+}
+
+#authFormContainer {
+	flex: 0.75;
+	background-image: url('../../images/letterGridBackground.jpg');
+	background-position-x: -300px;
+	min-width: 300px;
+
+	display: flex;
+	flex-direction: column;
+	border: 3px solid rgb(177, 151, 95);
+	border-radius: 6px;
+	padding: 20px;
+	box-shadow: 4px 4px 10px;
+}

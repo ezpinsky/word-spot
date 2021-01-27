@@ -1,0 +1,43 @@
+#footer {
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	height: 50px;
+	width: 100%;
+	border-top: 2px solid burlywood;
+	background-image: url('../../images/letterBackground.jpg');
+	box-shadow: 10px 0px 50px rgb(133, 131, 116);
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	color: rgb(250, 229, 204);
+	text-shadow: 3px 4px rgb(136, 110, 75);
+	user-select: none;
+}
+
+#footer b {
+	font-size: 1.5rem;
+	font-family: 'Raleway';
+}
+
+#footer > a {
+	text-decoration: none;
+	color: rgb(250, 229, 204);
+	text-shadow: 3px 4px rgb(136, 110, 75);
+	padding: 10px;
+}
+
+.fab {
+	padding-right: 20px;
+	font-size: 20px;
+}
+
+.far {
+	padding-right: 20px;
+	font-size: 20px;
+}
+
+.footerLink {
+	cursor: pointer;
+}

@@ -29,7 +29,6 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			{/* <NavBar setAuthenticated={setAuthenticated} /> */}
 			<Switch>
 				<Route path='/login' exact={true}>
 					<LandingPage
@@ -37,7 +36,6 @@ function App() {
 						authenticated={authenticated}
 						setAuthenticated={setAuthenticated}
 					/>
-					{/* <LoginForm authenticated={authenticated} setAuthenticated={setAuthenticated} /> */}
 				</Route>
 				<Route path='/sign-up' exact={true}>
 					<LandingPage
@@ -45,7 +43,6 @@ function App() {
 						authenticated={authenticated}
 						setAuthenticated={setAuthenticated}
 					/>
-					{/* <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} /> */}
 				</Route>
 				<ProtectedRoute path='/users' exact={true} authenticated={authenticated}>
 					<UsersList />

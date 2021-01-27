@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+import './landingpage.css';
 import SignUpForm from '../auth/SignUpForm';
 import LoginForm from '../auth/LoginForm';
+import Footer from '../footer/Footer';
 
 export default function LandingPage({ authType, authenticated, setAuthenticated }) {
 	return (
@@ -8,12 +10,16 @@ export default function LandingPage({ authType, authenticated, setAuthenticated 
 			<div id='pageContainer'>
 				<div id='infoContainer'>This is the info</div>
 				<div id='authFormContainer'>
+					<div id='logoBackground'>
+						<div id='logo'></div>
+					</div>
 					{authType === 'login' ? (
 						<LoginForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
 					) : (
 						<SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
 					)}
 				</div>
+				<Footer />
 			</div>
 		</>
 	);
