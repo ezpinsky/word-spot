@@ -80,10 +80,10 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
 						</div>
 					</div>
 					<div className='authBtnContainer'>
-						<button onClick={demoLogin} type='submit' className='btn authBtn lightFont'>
+						<button onClick={demoLogin} type='submit' className='btn authBtn lightFont darkHover'>
 							Demo
 						</button>
-						<button type='submit' className='btn authBtn lightFont'>
+						<button type='submit' className='btn authBtn lightFont darkHover'>
 							Login
 						</button>
 					</div>

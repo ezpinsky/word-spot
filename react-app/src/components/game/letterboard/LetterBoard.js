@@ -308,19 +308,25 @@ export default function LetterBoard({ setAuthenticated }) {
 									{(!newBoardInput && (
 										<>
 											<div id='btnSpacerDiv'>
-												<div className='btn lightFont helpBtn' onClick={handleRotateBoardClick}>
+												<div
+													className='btn lightFont helpBtn darkHover'
+													onClick={handleRotateBoardClick}
+												>
 													<i className='fas fa-sync-alt'></i>
 												</div>
 											</div>
 											<div id='btnSpacerDiv'>
-												<div className='btn lightFont helpBtn' onClick={handleHintClick}>
+												<div className='btn lightFont helpBtn darkHover' onClick={handleHintClick}>
 													<i className='fas fa-question'></i>
 												</div>
 											</div>
 											<div id='selectedLettersContainer' className='lightBkgrnd'>
 												{spotLetters}
 											</div>
-											<div className='btn lightFont spotWordBtn' onClick={handleWordSubmit}>
+											<div
+												className='btn lightFont spotWordBtn darkHover'
+												onClick={handleWordSubmit}
+											>
 												Spot
 											</div>
 										</>
@@ -348,7 +354,7 @@ export default function LetterBoard({ setAuthenticated }) {
 							<div id='profileContainer' className='darkFont'>
 								<div
 									id='username'
-									className='lightHover'
+									className='darkFont lightHover'
 									onClick={() =>
 										showProfileOptions ? setShowProfileOptions(false) : setShowProfileOptions(true)
 									}
@@ -368,12 +374,18 @@ export default function LetterBoard({ setAuthenticated }) {
 								)}
 							</div>
 							<div id='rightSideBarBtnContainer'>
-								<div className='btn lightFont rightSideBarBtn' onClick={handleNextBoardClick}>
+								<div
+									className='btn lightFont rightSideBarBtn darkHover'
+									onClick={handleNextBoardClick}
+								>
 									<p>Next Board</p>
 									<i className='fas fa-long-arrow-alt-right arrowIcon'></i>
 								</div>
 								{!newBoardInput && (
-									<div className='btn lightFont rightSideBarBtn' onClick={handleCreateNewClick}>
+									<div
+										className='btn lightFont rightSideBarBtn darkHover'
+										onClick={handleCreateNewClick}
+									>
 										<p> Create New</p>
 										<i className='fas fa-puzzle-piece'></i>
 									</div>

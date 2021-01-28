@@ -172,7 +172,7 @@ body {
 
 .lightFont {
 	color: rgb(250, 229, 204);
-	text-shadow: 2px 2px rgb(136, 110, 75);
+	text-shadow: 2px 2px 5px rgb(136, 110, 75);
 }
 
 .letterLightFont {
@@ -192,6 +192,10 @@ body {
 .lightHover:hover {
 	color: rgb(250, 229, 204);
 	text-shadow: 1px 2px 5px rgb(136, 110, 75);
+}
+
+.darkHover:hover {
+	color: rgb(136, 110, 75);
 }
 
 .rounded {
@@ -215,5 +219,14 @@ body {
 }
 
 .btn:hover {
-	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.19);
+}
+
+.font-larger {
+	font-size: large;
+	font-weight: 600;
+}
+
+.darkHover2:hover {
+	color: rgb(245, 192, 124);
 }

@@ -12,13 +12,24 @@
 }
 
 #infoContainer {
-	background-image: url('../../images/letterGridBackground.jpg');
-	background-position-x: -300px;
+	background-image: url('../../images/info-bkgrnd-2.jpg');
+	background-position: center;
+	background-size: cover;
+	border: 1px solid burlywood;
+	box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.651);
 	overflow: overlay;
 	width: calc(100% - 200px);
 	height: calc(100% - 200px);
 	overflow-y: scroll;
+	padding: 35px;
+	border-radius: 8px;
 }
+
+#infoContainer > p {
+	line-height: 25px;
+	letter-spacing: 2px;
+}
+
 #authContainer {
 	flex: 0.75;
 	background-image: url('../../images/letterGridBackground.jpg');
@@ -38,6 +49,14 @@
 	margin-top: 50px;
 }
 
+h1 {
+	margin: 10px 0 10px 0;
+}
+
+.paraTitle {
+	margin: 20px 0 20px 0;
+}
+
 #authForm {
 	font-size: 20px;
 	border: 5px solid rgb(177, 151, 95);
@@ -45,7 +64,7 @@
 	min-height: 350px;
 	width: 375px;
 	padding: 15px;
-	margin-top: 120px;
+	margin-top: 55px;
 	background-image: url('../../images/letterBackground.jpg');
 	background-position-x: -400px;
 	display: flex;
@@ -94,6 +113,7 @@ label {
 	font-size: 20px;
 	box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.651);
 	user-select: none;
+	transition: 0.2s;
 }
 
 .authBtn:focus {
