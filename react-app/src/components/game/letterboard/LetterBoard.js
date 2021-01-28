@@ -348,13 +348,13 @@ export default function LetterBoard({ setAuthenticated }) {
 							<div id='profileContainer' className='darkFont'>
 								<div
 									id='username'
-									className=''
+									className='lightHover'
 									onClick={() =>
 										showProfileOptions ? setShowProfileOptions(false) : setShowProfileOptions(true)
 									}
 								>
 									<i className='fas fa-user'></i>
-									<p>{username}</p>
+									{username}
 								</div>
 								{showProfileOptions ? (
 									<div id='profileOptions' className='lightFont'>
