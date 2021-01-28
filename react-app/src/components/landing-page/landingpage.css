@@ -3,11 +3,22 @@
 	height: calc(100% - 50px);
 	font-family: 'Raleway';
 }
-#infoContainer {
+#infoWrapper {
 	flex: 2;
 	min-width: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
+#infoContainer {
+	background-image: url('../../images/letterGridBackground.jpg');
+	background-position-x: -300px;
+	overflow: overlay;
+	width: calc(100% - 200px);
+	height: calc(100% - 200px);
+	overflow-y: scroll;
+}
 #authContainer {
 	flex: 0.75;
 	background-image: url('../../images/letterGridBackground.jpg');
@@ -99,7 +110,7 @@ label {
 	height: 28px;
 	width: 180px;
 	border-radius: 8px;
-	box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.651);
+	box-shadow: 2px 3px 5px rgba(100, 79, 56, 0.856);
 	color: rgb(136, 110, 75);
 	font-size: 14px;
 }
@@ -111,8 +122,8 @@ label {
 }
 
 .authInput:focus {
+	box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.651);
 	outline: none;
-	box-shadow: 2px 3px 5px rgba(100, 79, 56, 0.856);
 }
 
 .authTitle {

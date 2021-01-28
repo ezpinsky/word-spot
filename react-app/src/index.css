@@ -113,6 +113,7 @@ section {
 }
 body {
 	line-height: 1;
+	overflow: overlay;
 }
 ol,
 ul {
@@ -149,8 +150,8 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background-color: rgb(250, 229, 204);
-	/* background-color: transparent; */
+	/* background-color: rgb(250, 229, 204); */
+	background-color: transparent;
 }
 
 /* Handle */

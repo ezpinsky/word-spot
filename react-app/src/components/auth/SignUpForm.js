@@ -73,6 +73,7 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
 								onChange={updateUsername}
 								placeholder='Username. . .'
 								value={username}
+								required={true}
 								className='lightBkgrnd authInput'
 							/>
 						</div>
@@ -83,6 +84,7 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
 								placeholder='Email. . .'
 								value={email}
 								onChange={updateEmail}
+								required={true}
 								className='lightBkgrnd rounded authInput'
 							/>
 						</div>
@@ -93,6 +95,7 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
 								placeholder='Password. . .'
 								value={password}
 								onChange={updatePassword}
+								required={true}
 								className='lightBkgrnd rounded authInput'
 							/>
 						</div>
@@ -110,7 +113,7 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
 					</div>
 				</div>
 				<div className='authBtnContainer'>
-					<button type='submit' className='btn authBtn lightFont'>
+					<button onSubmit={onSignUp} type='submit' className='btn authBtn lightFont'>
 						Sign Up
 					</button>
 				</div>
