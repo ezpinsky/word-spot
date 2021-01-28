@@ -6,6 +6,7 @@
 
 #leftSideBar {
 	flex: 1;
+	height: calc(100% + 25px);
 }
 
 #foundWordsWrapper {
@@ -19,7 +20,7 @@
 }
 
 #foundWordsContainer {
-	margin-right: 150px;
+	margin-right: 100px;
 	margin-top: 200px;
 }
 
@@ -223,20 +224,63 @@ p {
 
 #rightSideBar {
 	flex: 1;
+	height: calc(100% + 25px);
 	display: flex;
 	align-items: center;
 }
-
-#profile {
+#profileContainer {
 	position: absolute;
-	min-width: 50px;
-	min-height: 25px;
-	width: 12vw;
-	height: 3vw;
-	border: 1px solid black;
+	top: 55px;
+	margin-left: 375px;
+	font-size: 25px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	user-select: none;
+}
+
+#username {
+	width: 175px;
+	height: 35px;
+	display: flex;
+	align-items: flex-end;
+	font-family: 'Raleway';
+	font-weight: 700;
+	cursor: pointer;
+	text-align: left;
+	transition: 0.5s;
+}
+
+#username:active {
+	font-size: 28px;
+}
+
+.fa-user {
+	padding: 0 0 3px 5px;
+}
+
+#profileOptions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: space-evenly;
+	width: 175px;
+	height: 150px;
+}
+
+.soundBtn {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+}
+
+#logoutBtn {
+	height: 40px;
+	width: 100px;
 }
 
 #rightSideBarBtnContainer {
+	flex: 2;
 	margin-top: 200px;
 	height: 250px;
 	display: flex;
@@ -250,7 +294,7 @@ p {
 	display: flex;
 	justify-content: space-evenly;
 	font-size: 23px;
-	margin-left: 150px;
+	margin-left: 100px;
 	user-select: none;
 }
 

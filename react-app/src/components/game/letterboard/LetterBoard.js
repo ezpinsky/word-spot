@@ -2,7 +2,7 @@ import './letterboard.css';
 import React, { useEffect, useState } from 'react';
 import newLetterBoard from '../../../services/letterBoard';
 import LogoutButton from '../../auth/LogoutButton';
-
+import { authenticate } from '../../../services/auth';
 export default function LetterBoard({ setAuthenticated }) {
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
@@ -16,6 +16,8 @@ export default function LetterBoard({ setAuthenticated }) {
 	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start!');
 	const [errorMessages, setErrorMessages] = useState(null);
 	const [newBoardInput, setNewBoardInput] = useState(false);
+	const [showProfileOptions, setShowProfileOptions] = useState(false);
+	const [username, setUsername] = useState('');
 	const [score, setScore] = useState(0);
 
 	const foundWordMessages = [
@@ -207,10 +209,15 @@ export default function LetterBoard({ setAuthenticated }) {
 	};
 	const handleHintClick = () => {};
 
-	//fetches first letterBoard
 	useEffect(() => {
-		fetchLetterBoard();
+		(async () => {
+			let user = await authenticate();
+			setUsername(user.username.toLowerCase());
+		})();
 	}, []);
+
+	//fetches first letterBoard
+	useEffect(() => fetchLetterBoard(), []);
 
 	//handles new move and deselection
 	useEffect(() => {
@@ -338,13 +345,27 @@ export default function LetterBoard({ setAuthenticated }) {
 							</div>
 						</div>
 						<div id='rightSideBar'>
-							<div id='profile'>
-								<div>
-									<p></p>
+							<div id='profileContainer' className='darkFont'>
+								<div
+									id='username'
+									className=''
+									onClick={() =>
+										showProfileOptions ? setShowProfileOptions(false) : setShowProfileOptions(true)
+									}
+								>
+									<i className='fas fa-user'></i>
+									<p>{username}</p>
 								</div>
-								<div>
-									<LogoutButton setAuthenticated={setAuthenticated} />
-								</div>
+								{showProfileOptions ? (
+									<div id='profileOptions' className='lightFont'>
+										<div className='btn soundBtn'>
+											<i className='fas fa-music'></i>
+										</div>
+										<LogoutButton setAuthenticated={setAuthenticated} />
+									</div>
+								) : (
+									<> </>
+								)}
 							</div>
 							<div id='rightSideBarBtnContainer'>
 								<div className='btn lightFont rightSideBarBtn' onClick={handleNextBoardClick}>
