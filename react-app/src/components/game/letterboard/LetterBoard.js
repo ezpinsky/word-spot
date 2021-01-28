@@ -338,6 +338,7 @@ export default function LetterBoard({ setAuthenticated }) {
 												autoFocus
 												maxLength='16'
 												onChange={handleInputChange}
+												autocomplete='off'
 											/>
 											<div
 												className='btn lightFont createBoardBtn'
