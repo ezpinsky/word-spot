@@ -16,7 +16,6 @@
 	height: calc(100% - 48px);
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 	border: 3px solid rgb(177, 151, 95);
 	border-radius: 6px;
@@ -24,16 +23,20 @@
 	box-shadow: 4px 4px 10px;
 }
 
+.landingLogo {
+	margin-top: 50px;
+}
+
 #authForm {
 	font-size: 20px;
 	border: 5px solid rgb(177, 151, 95);
 	border-radius: 10px;
 	min-height: 350px;
-	min-width: 300px;
+	width: 375px;
 	padding: 15px;
-	margin-top: 50px;
+	margin-top: 120px;
 	background-image: url('../../images/letterBackground.jpg');
-	background-position-x: -200px;
+	background-position-x: -400px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -59,9 +62,13 @@
 	text-align: right;
 	justify-content: space-around;
 	font-weight: 600;
+	font-size: 25px;
 }
-.authLabel {
-	text-align: right;
+
+label {
+	user-select: none;
+	font-size: 20px;
+	margin-top: 13px;
 }
 
 .authInputContainer {
@@ -75,6 +82,12 @@
 	margin: 20px;
 	font-size: 20px;
 	box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.651);
+	user-select: none;
+}
+
+.authBtn:focus {
+	outline: none;
+	box-shadow: 1px 2px 8px 5px rgb(110, 88, 59);
 }
 
 .authBtnContainer {
@@ -83,22 +96,38 @@
 
 .authInput {
 	margin: 20px;
-	height: 25px;
+	height: 28px;
 	width: 180px;
 	border-radius: 8px;
-	/* border: 4px solid rgb(177, 151, 95); */
 	box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.651);
+	color: rgb(136, 110, 75);
+	font-size: 14px;
 }
 ::placeholder {
 	color: rgb(136, 110, 75);
 	font-family: 'Raleway';
 	font-size: 14px;
+	user-select: none;
 }
 
 .authInput:focus {
 	outline: none;
+	box-shadow: 2px 3px 5px rgba(100, 79, 56, 0.856);
 }
 
 .authTitle {
-	margin: 5px 0 20px 0;
+	margin: 15px 0 20px 0;
+}
+
+.authSwitchLink {
+	cursor: pointer;
+	padding: 20px 10px;
+	font-weight: 600;
+	text-align: center;
+	line-height: 25px;
+	margin-top: -5px;
+}
+
+.authSwitchLink:hover {
+	text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.555);
 }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../services/auth';
 
 const LoginForm = ({ authenticated, setAuthenticated }) => {
 	const [errors, setErrors] = useState([]);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	let history = useHistory();
 
 	const onLogin = async e => {
 		e.preventDefault();
@@ -60,7 +61,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
 								<input
 									name='email'
 									type='text'
-									placeholder='Email'
+									placeholder='Email. . .'
 									value={email}
 									onChange={updateEmail}
 									className='lightBkgrnd rounded authInput'
@@ -70,7 +71,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
 								<input
 									name='password'
 									type='password'
-									placeholder='Password'
+									placeholder='Password. . .'
 									value={password}
 									onChange={updatePassword}
 									className='lightBkgrnd rounded authInput'
@@ -79,14 +80,15 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
 						</div>
 					</div>
 					<div className='authBtnContainer'>
-						<form onSubmit={demoLogin}>
-							<button type='submit' className='btn authBtn lightFont'>
-								Demo
-							</button>
-						</form>
+						<button onClick={demoLogin} type='submit' className='btn authBtn lightFont'>
+							Demo
+						</button>
 						<button type='submit' className='btn authBtn lightFont'>
 							Login
 						</button>
+					</div>
+					<div className='authSwitchLink' onClick={() => history.push('/sign-up')}>
+						Don't have an account? Sign up here!
 					</div>
 				</div>
 			</form>

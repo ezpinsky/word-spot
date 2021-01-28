@@ -11,7 +11,7 @@ export default function LandingPage({ authType, authenticated, setAuthenticated 
 				<div id='infoContainer'>This is the info</div>
 				<div id='authContainer'>
 					<div id='logoBackground'>
-						<div id='logo'></div>
+						<div id='logo' className='landingLogo'></div>
 					</div>
 					<div id='authForm'>
 						{authType === 'login' ? (
