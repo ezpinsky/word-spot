@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import newLetterBoard from '../../../services/letterBoard';
 import LogoutButton from '../../auth/LogoutButton';
 import { authenticate } from '../../../services/auth';
+import bkgrndMusic from '../../../audio/et-voila-chris-haugen.mp3';
+
 export default function LetterBoard({ setAuthenticated }) {
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
@@ -18,6 +20,7 @@ export default function LetterBoard({ setAuthenticated }) {
 	const [newBoardInput, setNewBoardInput] = useState(false);
 	const [showProfileOptions, setShowProfileOptions] = useState(false);
 	const [username, setUsername] = useState('');
+	const [musicPaused, setMusicPaused] = useState(false);
 	const [score, setScore] = useState(0);
 
 	const foundWordMessages = [
@@ -231,6 +234,18 @@ export default function LetterBoard({ setAuthenticated }) {
 	};
 	const handleHintClick = () => {};
 
+	const handleMuteMusicBtn = e => {
+		let musicPlayerEl = document.getElementById('backgroundMusic');
+		if (!musicPaused) {
+			e.target.classList.add('muted');
+			musicPlayerEl.pause();
+			setMusicPaused(true);
+		} else {
+			e.target.classList.remove('muted');
+			musicPlayerEl.play();
+			setMusicPaused(false);
+		}
+	};
 	useEffect(() => {
 		(async () => {
 			let user = await authenticate();
@@ -382,13 +397,14 @@ export default function LetterBoard({ setAuthenticated }) {
 										showProfileOptions ? setShowProfileOptions(false) : setShowProfileOptions(true)
 									}
 								>
-									<i className='fas fa-user'></i>
+									<i className='fas fa-cog'></i>
 									{username}
 								</div>
+								<audio id='backgroundMusic' loop autoPlay={true} src={bkgrndMusic}></audio>
 								{showProfileOptions ? (
-									<div id='profileOptions' className='lightFont'>
+									<div id='profileOptions' className='lightFont' onClick={handleMuteMusicBtn}>
 										<div className='btn soundBtn'>
-											<i className='fas fa-music'></i>
+											<i id='musicSymbol' className='fas fa-music'></i>
 										</div>
 										<LogoutButton setAuthenticated={setAuthenticated} />
 									</div>
