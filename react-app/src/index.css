@@ -86,6 +86,17 @@ video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	font-family: 'Raleway';
+}
+
+h1,
+h2,
+h3 {
+	font-family: 'Raleway';
+}
+
+h1 {
+	font-size: 50px;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -103,6 +114,7 @@ section {
 }
 body {
 	line-height: 1;
+	overflow: overlay;
 }
 ol,
 ul {
@@ -127,17 +139,20 @@ table {
 body {
 	margin: 0;
 }
+
 #root {
 	height: 100vh;
 }
 
 ::-webkit-scrollbar {
 	width: 8px;
+	height: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background-color: rgb(250, 229, 204);
+	/* background-color: rgb(250, 229, 204); */
+	background-color: transparent;
 }
 
 /* Handle */
@@ -152,5 +167,66 @@ body {
 }
 
 ::-webkit-scrollbar-corner {
-	background-color: transparent;
+	background-color: rgb(250, 229, 204);
+}
+
+.lightFont {
+	color: rgb(250, 229, 204);
+	text-shadow: 2px 2px 5px rgb(136, 110, 75);
+}
+
+.letterLightFont {
+	color: rgb(250, 229, 204);
+	text-shadow: 3px 4px rgb(136, 110, 75);
+}
+
+.darkFont {
+	color: rgb(136, 110, 75);
+}
+
+.lightBkgrnd {
+	background-color: rgb(250, 229, 204);
+	border: 4px solid burlywood;
+}
+
+.lightHover:hover {
+	color: rgb(250, 229, 204);
+	text-shadow: 1px 2px 5px rgb(136, 110, 75);
+}
+
+.darkHover:hover {
+	color: rgb(136, 110, 75);
+}
+
+.rounded {
+	border-radius: 5px;
+}
+
+.btn {
+	font-family: 'Raleway';
+	background-color: #deb887;
+	text-align: center;
+	line-height: 1px;
+	font-weight: 800;
+	cursor: pointer;
+	background-image: url('../src/images/letterBackground.jpg');
+	background-position: center;
+	border: 4px solid burlywood;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn:hover {
+	box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.19);
+}
+
+.font-larger {
+	font-size: large;
+	font-weight: 600;
+}
+
+.darkHover2:hover {
+	color: rgb(245, 192, 124);
 }

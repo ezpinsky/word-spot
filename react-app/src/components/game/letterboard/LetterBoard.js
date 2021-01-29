@@ -1,8 +1,9 @@
 import './letterboard.css';
 import React, { useEffect, useState } from 'react';
 import newLetterBoard from '../../../services/letterBoard';
-
-export default function LetterBoard() {
+import LogoutButton from '../../auth/LogoutButton';
+import { authenticate } from '../../../services/auth';
+export default function LetterBoard({ setAuthenticated }) {
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
 	const [letterBoard, setLetterBoard] = useState([]);
@@ -15,6 +16,8 @@ export default function LetterBoard() {
 	const [gameMessage, setGameMessage] = useState('Select Any Letter To Start!');
 	const [errorMessages, setErrorMessages] = useState(null);
 	const [newBoardInput, setNewBoardInput] = useState(false);
+	const [showProfileOptions, setShowProfileOptions] = useState(false);
+	const [username, setUsername] = useState('');
 	const [score, setScore] = useState(0);
 
 	const foundWordMessages = [
@@ -46,7 +49,7 @@ export default function LetterBoard() {
 		const validMoves = [];
 		for (let x = startX; x < endX; x++) {
 			for (let y = startY; y < endY; y++) {
-				// this if statement gets around javascript drawback where two objects can only be equal if they point to same object in memory
+				// this if statement sidesteps javascript drawback where two objects can only be equal if they point to same object in memory
 				if (!(lastMove[0] === x && lastMove[1] === y)) {
 					validMoves.push([x, y]);
 				}
@@ -79,7 +82,7 @@ export default function LetterBoard() {
 	const clearBoard = () => {
 		setSpotLetters();
 		deselectLetters(0);
-		//future feature to save score
+		//future feature to save score here
 		setLetterBoard([]);
 		setBoardWords([]);
 		setFoundWords([]);
@@ -106,9 +109,20 @@ export default function LetterBoard() {
 		}
 	};
 
-	useEffect(() => {
-		fetchLetterBoard();
-	}, []);
+	//scrolls to bottom of spotted words box when new word spotted
+	const updateFoundWordsScroll = () => {
+		const wordsDiv = document.getElementById('foundWords');
+		wordsDiv.scrollTop = wordsDiv.scrollHeight;
+	};
+
+	/* Pseudocode for selected letters connecting lines */
+	// e.target.getBoundingClientRect()) => returns the x, y location of the clicked letter
+	// get x,y range of letter clicked on
+	// get x,y range of last letter clicked on
+	// set direction based on copmarison of x,y values of click
+	// Option 1: add hidden lines behind board that can be displayed or hidden
+	// Option 2: add child element that is absolutley positioned to the letter box
+	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
 
 	const handleLetterClick = e => {
 		const newMove = e.target // parses the location numbers
@@ -177,11 +191,11 @@ export default function LetterBoard() {
 		setErrorMessages(false);
 		let letters = letterBoard.join('');
 		setGameMessage('Checking over 40,000 orientations of your letters');
-		let res = await newLetterBoard(letters);
 		// show letters and spaces in grid at rand locations with timer
 		//show message tthat algo running etc.
 		//when board comes back show message that new board created
 		//.toLowerCase()
+		let res = await newLetterBoard(letters);
 		if (res.errors) {
 			res.errors.forEach(error =>
 				!errorMessages
@@ -194,6 +208,16 @@ export default function LetterBoard() {
 		}
 	};
 	const handleHintClick = () => {};
+
+	useEffect(() => {
+		(async () => {
+			let user = await authenticate();
+			setUsername(user.username.toLowerCase());
+		})();
+	}, []);
+
+	//fetches first letterBoard
+	useEffect(() => fetchLetterBoard(), []);
 
 	//handles new move and deselection
 	useEffect(() => {
@@ -213,20 +237,6 @@ export default function LetterBoard() {
 		}
 	}, [selection]);
 
-	// console.log(newMoveEle.getBoundingClientRect());
-	// sudo code for algo to determine where to put a line connecting lines
-	// e.target.getBoundingClientRect())
-	// get x,y range of letter clicked on
-	// get x,y range of last letter
-	// set directino based on copmarison of x,y values of click
-	// add child element that is absolutley positioned to the letter box
-	// <div>style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transform: 'rotate(45deg')}}</div>
-
-	const updateFoundWordsScroll = () => {
-		const wordsDiv = document.getElementById('foundWords');
-		wordsDiv.scrollTop = wordsDiv.scrollHeight;
-	};
-
 	useEffect(() => {
 		if (foundWords.length > 0) {
 			updateFoundWordsScroll();
@@ -241,10 +251,10 @@ export default function LetterBoard() {
 						<div id='leftSideBar'>
 							<div id='foundWordsWrapper'>
 								<div id='foundWordsContainer'>
-									<div id='foundWordsTitle'>
+									<div id='foundWordsTitle' className='lightFont'>
 										Spotted Words {`${foundWords.length}/${boardWords.length}`}
 									</div>
-									<div id='foundWords'>
+									<div id='foundWords' className='lightBkgrnd'>
 										{foundWords.map(word => {
 											return <p key={word}>{word}</p>;
 										})}
@@ -278,7 +288,7 @@ export default function LetterBoard() {
 																onClick={handleLetterClick}
 															>
 																<div
-																	className='letter'
+																	className='letter letterLightFont'
 																	value={letter}
 																	key={[colNum, rowNum, 'letter']}
 																>
@@ -298,17 +308,25 @@ export default function LetterBoard() {
 									{(!newBoardInput && (
 										<>
 											<div id='btnSpacerDiv'>
-												<div className='btn helpBtn' onClick={handleRotateBoardClick}>
+												<div
+													className='btn lightFont helpBtn darkHover'
+													onClick={handleRotateBoardClick}
+												>
 													<i className='fas fa-sync-alt'></i>
 												</div>
 											</div>
 											<div id='btnSpacerDiv'>
-												<div className='btn helpBtn' onClick={handleHintClick}>
+												<div className='btn lightFont helpBtn darkHover' onClick={handleHintClick}>
 													<i className='fas fa-question'></i>
 												</div>
 											</div>
-											<div id='selectedLettersContainer'>{spotLetters}</div>
-											<div className='btn spotWordBtn' onClick={handleWordSubmit}>
+											<div id='selectedLettersContainer' className='lightBkgrnd'>
+												{spotLetters}
+											</div>
+											<div
+												className='btn lightFont spotWordBtn darkHover'
+												onClick={handleWordSubmit}
+											>
 												Spot
 											</div>
 										</>
@@ -316,11 +334,16 @@ export default function LetterBoard() {
 										<>
 											<input
 												id='inputContainer'
+												className='lightBkgrnd'
 												autoFocus
 												maxLength='16'
 												onChange={handleInputChange}
+												autocomplete='off'
 											/>
-											<div className='btn createBoardBtn' onClick={handleCreateBoardClick}>
+											<div
+												className='btn lightFont createBoardBtn'
+												onClick={handleCreateBoardClick}
+											>
 												Create
 											</div>
 										</>
@@ -329,13 +352,41 @@ export default function LetterBoard() {
 							</div>
 						</div>
 						<div id='rightSideBar'>
+							<div id='profileContainer' className='darkFont'>
+								<div
+									id='username'
+									className='darkFont lightHover'
+									onClick={() =>
+										showProfileOptions ? setShowProfileOptions(false) : setShowProfileOptions(true)
+									}
+								>
+									<i className='fas fa-user'></i>
+									{username}
+								</div>
+								{showProfileOptions ? (
+									<div id='profileOptions' className='lightFont'>
+										<div className='btn soundBtn'>
+											<i className='fas fa-music'></i>
+										</div>
+										<LogoutButton setAuthenticated={setAuthenticated} />
+									</div>
+								) : (
+									<> </>
+								)}
+							</div>
 							<div id='rightSideBarBtnContainer'>
-								<div className='btn rightSideBarBtn' onClick={handleNextBoardClick}>
-									<p> Next Board</p>
+								<div
+									className='btn lightFont rightSideBarBtn darkHover'
+									onClick={handleNextBoardClick}
+								>
+									<p>Next Board</p>
 									<i className='fas fa-long-arrow-alt-right arrowIcon'></i>
 								</div>
 								{!newBoardInput && (
-									<div className='btn rightSideBarBtn' onClick={handleCreateNewClick}>
+									<div
+										className='btn lightFont rightSideBarBtn darkHover'
+										onClick={handleCreateNewClick}
+									>
 										<p> Create New</p>
 										<i className='fas fa-puzzle-piece'></i>
 									</div>

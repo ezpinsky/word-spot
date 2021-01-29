@@ -1,85 +1,128 @@
-import React, { useState } from "react";
-import { Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
 import { signUp } from '../../services/auth';
 
-const SignUpForm = ({authenticated, setAuthenticated}) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+const SignUpForm = ({ authenticated, setAuthenticated }) => {
+	const [username, setUsername] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [errors, setErrors] = useState([]);
+	const history = useHistory();
 
-  const onSignUp = async (e) => {
-    e.preventDefault();
-    if (password === repeatPassword) {
-      const user = await signUp(username, email, password);
-      if (!user.errors) {
-        setAuthenticated(true);
-      }
-    }
-  };
+	const onSignUp = async e => {
+		e.preventDefault();
+		if (password === confirmPassword) {
+			const user = await signUp(username, email, password);
+			if (!user.errors) {
+				setAuthenticated(true);
+			} else {
+				setErrors(user.errors);
+			}
+		}
+	};
 
-  const updateUsername = (e) => {
-    setUsername(e.target.value);
-  };
+	const updateUsername = e => {
+		setUsername(e.target.value);
+	};
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
+	const updateEmail = e => {
+		setEmail(e.target.value);
+	};
 
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
+	const updatePassword = e => {
+		setPassword(e.target.value);
+	};
 
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
-  };
+	const updateConfirmPassword = e => {
+		setConfirmPassword(e.target.value);
+	};
 
-  if (authenticated) {
-    return <Redirect to="/" />;
-  }
+	if (authenticated) {
+		return <Redirect to='/' />;
+	}
 
-  return (
-    <form onSubmit={onSignUp}>
-      <div>
-        <label>User Name</label>
-        <input
-          type="text"
-          name="username"
-          onChange={updateUsername}
-          value={username}
-        ></input>
-      </div>
-      <div>
-        <label>Email</label>
-        <input
-          type="text"
-          name="email"
-          onChange={updateEmail}
-          value={email}
-        ></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          onChange={updatePassword}
-          value={password}
-        ></input>
-      </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
-          type="password"
-          name="repeat_password"
-          onChange={updateRepeatPassword}
-          value={repeatPassword}
-          required={true}
-        ></input>
-      </div>
-      <button type="submit">Sign Up</button>
-    </form>
-  );
+	return (
+		<form onSubmit={onSignUp}>
+			<div className='authFormContainer lightFont'>
+				<div>
+					{errors.map(error => (
+						<div id='authErrorContainer'>{error}</div>
+					))}
+				</div>
+				<div className='authLabelInputWrapper'>
+					<div className='authLabelContainer'>
+						<label htmlFor='username' className='authLabel'>
+							User Name
+						</label>
+						<label htmlFor='email' className='authLabel'>
+							Email
+						</label>
+						<label htmlFor='password' className='authLabel'>
+							Password
+						</label>
+						<label htmlFor='confirmPassword' className='authLabel'>
+							Confirm Password
+						</label>
+					</div>
+					<div className='authInputContainer'>
+						<div>
+							<input
+								type='text'
+								name='username'
+								onChange={updateUsername}
+								placeholder='Username. . .'
+								value={username}
+								required={true}
+								className='lightBkgrnd authInput'
+							/>
+						</div>
+						<div>
+							<input
+								name='email'
+								type='text'
+								placeholder='Email. . .'
+								value={email}
+								onChange={updateEmail}
+								required={true}
+								className='lightBkgrnd rounded authInput'
+							/>
+						</div>
+						<div>
+							<input
+								name='password'
+								type='password'
+								placeholder='Password. . .'
+								value={password}
+								onChange={updatePassword}
+								required={true}
+								className='lightBkgrnd rounded authInput'
+							/>
+						</div>
+						<div>
+							<input
+								type='password'
+								name='confirmPassword'
+								onChange={updateConfirmPassword}
+								value={confirmPassword}
+								placeholder='Confirm Password. . .'
+								required={true}
+								className='lightBkgrnd authInput'
+							></input>
+						</div>
+					</div>
+				</div>
+				<div className='authBtnContainer'>
+					<button onSubmit={onSignUp} type='submit' className='btn authBtn lightFont'>
+						Sign Up
+					</button>
+				</div>
+				<div className='authSwitchLink' onClick={() => history.push('/login')}>
+					Already have an account? <br></br>Sign in here!
+				</div>
+			</div>
+		</form>
+	);
 };
 
 export default SignUpForm;
