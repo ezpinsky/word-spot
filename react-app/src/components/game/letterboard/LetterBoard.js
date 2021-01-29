@@ -115,6 +115,25 @@ export default function LetterBoard({ setAuthenticated }) {
 		wordsDiv.scrollTop = wordsDiv.scrollHeight;
 	};
 
+	const algoVisual = () => {
+		let inputLetters = letterBoard;
+		let algoVisuals = '';
+		for (let letterGroup of inputLetters) {
+			for (let char of letterGroup.split('')) {
+				if (Math.floor(Math.random() * 2)) {
+					algoVisuals += char;
+				} else {
+					algoVisuals += ' ';
+				}
+			}
+		}
+		let matrixedLetters = [];
+		for (let i = 0; i < 13; i += 4) {
+			matrixedLetters.push(algoVisuals.slice(i, i + 4));
+		}
+		setLetterBoard(matrixedLetters);
+	};
+
 	/* Pseudocode for selected letters connecting lines */
 	// e.target.getBoundingClientRect()) => returns the x, y location of the clicked letter
 	// get x,y range of letter clicked on
@@ -191,18 +210,21 @@ export default function LetterBoard({ setAuthenticated }) {
 		setErrorMessages(false);
 		let letters = letterBoard.join('');
 		setGameMessage('Checking over 40,000 orientations of your letters');
-		// show letters and spaces in grid at rand locations with timer
-		//show message tthat algo running etc.
-		//when board comes back show message that new board created
-		//.toLowerCase()
+		const algoVisualInterval = setInterval(algoVisual, 500);
+		const timer = setInterval(() => console.log(1), 1000);
 		let res = await newLetterBoard(letters);
 		if (res.errors) {
+			clearBoard();
+			clearInterval(timer);
+			clearInterval(algoVisualInterval);
 			res.errors.forEach(error =>
 				!errorMessages
 					? setErrorMessages([error.slice(10)])
 					: setErrorMessages([...errorMessages, error.slice(10)])
 			);
 		} else {
+			clearInterval(timer);
+			clearInterval(algoVisualInterval);
 			setNewBoard(res, 'Suitable orientation found! Select a letter to play!');
 			setNewBoardInput(false);
 		}
@@ -338,7 +360,7 @@ export default function LetterBoard({ setAuthenticated }) {
 												autoFocus
 												maxLength='16'
 												onChange={handleInputChange}
-												autocomplete='off'
+												autoComplete='off'
 											/>
 											<div
 												className='btn lightFont createBoardBtn'
