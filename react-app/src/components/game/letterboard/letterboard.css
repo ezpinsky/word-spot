@@ -255,8 +255,12 @@ p {
 	font-size: 28px;
 }
 
-.fa-user {
-	padding: 0 8px 5px 5px;
+.fa-cog {
+	padding: 0 8px 0 5px;
+}
+
+.muted {
+	color: rgb(88, 66, 66);
 }
 
 #profileOptions {
