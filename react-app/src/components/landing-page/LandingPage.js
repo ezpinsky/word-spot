@@ -15,7 +15,7 @@ export default function LandingPage({ authType, authenticated, setAuthenticated 
 				<div id='infoWrapper' className='rounded darkFont'>
 					<div id='infoContainer' className='rounded darkFont'>
 						<p className='font-larger'>
-							<h1 className='paraTitle'>Welcome To WordSpot</h1>
+							<h1 className='paraTitle'>Welcome To WordSpot!</h1>
 							WordSpot is a word-finding game similar to boggle with a powerful Depth-First Search
 							Algorithm used to generate new letter boards based on user input. The goal is to find
 							as many words as you can by connecting adjacent letters in a 4 x 4 letter grid. Keep
