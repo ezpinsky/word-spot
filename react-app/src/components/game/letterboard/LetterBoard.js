@@ -8,7 +8,7 @@ import bkgrndMusic from '../../../audio/et-voila-chris-haugen.mp3';
 export default function LetterBoard({ setAuthenticated }) {
 	const [loaded, setLoaded] = useState(false);
 	const [boardLoaded, setBoardLoaded] = useState(false);
-	const [letterBoard, setLetterBoard] = useState([]);
+	const [letterBoard, setLetterBoard] = useState(['    ', '    ', '    ', '    ']);
 	const [orientations, setOrientations] = useState([]);
 	const [boardWords, setBoardWords] = useState([]);
 	const [selection, setSelection] = useState(null);
@@ -86,7 +86,7 @@ export default function LetterBoard({ setAuthenticated }) {
 		setSpotLetters();
 		deselectLetters(0);
 		//future feature to save score here
-		setLetterBoard([]);
+		setLetterBoard(['    ', '    ', '    ', '    ']);
 		setBoardWords([]);
 		setFoundWords([]);
 		setOrientations([]);
@@ -214,11 +214,9 @@ export default function LetterBoard({ setAuthenticated }) {
 		let letters = letterBoard.join('');
 		setGameMessage('Checking over 40,000 orientations of your letters');
 		const algoVisualInterval = setInterval(algoVisual, 500);
-		const timer = setInterval(() => console.log(1), 1000);
 		let res = await newLetterBoard(letters);
 		if (res.errors) {
 			clearBoard();
-			clearInterval(timer);
 			clearInterval(algoVisualInterval);
 			res.errors.forEach(error =>
 				!errorMessages
@@ -226,7 +224,6 @@ export default function LetterBoard({ setAuthenticated }) {
 					: setErrorMessages([...errorMessages, error.slice(10)])
 			);
 		} else {
-			clearInterval(timer);
 			clearInterval(algoVisualInterval);
 			setNewBoard(res, 'Suitable orientation found! Select a letter to play!');
 			setNewBoardInput(false);
@@ -417,7 +414,8 @@ export default function LetterBoard({ setAuthenticated }) {
 									className='btn lightFont rightSideBarBtn darkHover'
 									onClick={handleNextBoardClick}
 								>
-									<p>Next Board</p>
+									{newBoardInput ? <p id='exitBtn'>Exit</p> : <p>Next Board</p>}
+
 									<i className='fas fa-long-arrow-alt-right arrowIcon'></i>
 								</div>
 								{!newBoardInput && (

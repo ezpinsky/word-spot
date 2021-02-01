@@ -311,3 +311,8 @@ p {
 	font-size: 30px;
 	padding-bottom: 2px;
 }
+
+#exitBtn {
+	margin-right: -20px;
+	font-size: 35px;
+}
