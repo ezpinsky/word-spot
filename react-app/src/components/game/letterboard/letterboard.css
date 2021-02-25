@@ -272,10 +272,18 @@ p {
 	height: 150px;
 }
 
+#musicControlsContainer {
+	display: flex;
+	width: 250px;
+	justify-content: flex-end;
+	align-content: center;
+}
+
 .soundBtn {
 	height: 40px;
 	width: 40px;
 	border-radius: 50%;
+	margin-left: 20px;
 }
 
 #logoutBtn {
@@ -315,4 +323,66 @@ p {
 #exitBtn {
 	margin-right: -20px;
 	font-size: 35px;
+}
+
+input[type='range'] {
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	/* width: 200px; */
+	background-color: transparent;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+	width: 200px;
+	height: 10px;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	background-color: rgb(250, 229, 204);
+}
+input[type='range']:active::-webkit-slider-runnable-track {
+	background-color: rgba(136, 109, 75, 0.808);
+}
+
+input[type='range']::-moz-range-track {
+	width: 200px;
+	height: 10px;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	background-color: rgb(250, 229, 204);
+}
+
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	border: none;
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+	border: 3px solid burlywood;
+	background-image: url('../../../images/letterBackground.jpg');
+	background-position: center;
+	margin-top: -8px;
+}
+
+input[type='range']::-moz-range-thumb {
+	border: none;
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+	border: 3px solid burlywood;
+	background-image: url('../../../images/letterBackground.jpg');
+	background-position: center;
+	margin-top: -8px;
+}
+
+input[type='range']:focus {
+	outline: none;
+}
+
+input[type='range']:-moz-focusring {
+	outline: 1px solid white;
+	outline-offset: -1px;
 }

@@ -39,7 +39,6 @@ def get_letter_board(id):
 @login_required
 def create_letter_board():
   form = Letter_Board_Form()
-  print("this is the request.json():", request.get_json())
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
     formatted_letters = ' '.join(matrixize(form.data['letters']))
