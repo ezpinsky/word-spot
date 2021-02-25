@@ -1,5 +1,5 @@
 import './letterboard.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import newLetterBoard from '../../../services/letterBoard';
 import LogoutButton from '../../auth/LogoutButton';
 import { authenticate } from '../../../services/auth';
@@ -21,6 +21,8 @@ export default function LetterBoard({ setAuthenticated }) {
 	const [showProfileOptions, setShowProfileOptions] = useState(false);
 	const [username, setUsername] = useState('');
 	const [musicPaused, setMusicPaused] = useState(false);
+	const [backgroundMusicVolume, setBackgroundMusicVolume] = useState('0.1');
+	const backgroundMusic = useRef(null);
 	const [score, setScore] = useState(0);
 
 	const foundWordMessages = [
@@ -231,18 +233,18 @@ export default function LetterBoard({ setAuthenticated }) {
 	};
 	const handleHintClick = () => {};
 
-	const handleMuteMusicBtn = e => {
-		let musicPlayerEl = document.getElementById('backgroundMusic');
-		if (!musicPaused) {
+	const handleMusicBtn = e => {
+		if (!backgroundMusic.current.muted) {
+			backgroundMusic.current.muted = true;
+			backgroundMusic.current.pause();
 			e.target.classList.add('muted');
-			musicPlayerEl.pause();
-			setMusicPaused(true);
 		} else {
+			backgroundMusic.current.muted = false;
+			backgroundMusic.current.play();
 			e.target.classList.remove('muted');
-			musicPlayerEl.play();
-			setMusicPaused(false);
 		}
 	};
+
 	useEffect(() => {
 		(async () => {
 			let user = await authenticate();
@@ -397,11 +399,38 @@ export default function LetterBoard({ setAuthenticated }) {
 									<i className='fas fa-cog'></i>
 									{username}
 								</div>
-								<audio id='backgroundMusic' loop autoPlay={true} src={bkgrndMusic}></audio>
+								<audio
+									id='backgroundMusic'
+									loop
+									ref={backgroundMusic}
+									volume={backgroundMusicVolume}
+									autoPlay={true}
+									src={bkgrndMusic}
+									onCanPlay={e => (e.target.volume = 0.2)}
+								></audio>
 								{showProfileOptions ? (
-									<div id='profileOptions' className='lightFont' onClick={handleMuteMusicBtn}>
-										<div className='btn soundBtn'>
-											<i id='musicSymbol' className='fas fa-music'></i>
+									<div id='profileOptions' className='lightFont'>
+										<div id='musicControlsContainer'>
+											<input
+												id='volumeControlSlide'
+												type='range'
+												onChange={e => {
+													backgroundMusic.current.volume = e.target.value.toString();
+													setBackgroundMusicVolume(e.target.value);
+												}}
+												value={backgroundMusicVolume}
+												min='0'
+												max='1'
+												step='0.1'
+											></input>
+											<div className='btn soundBtn' onClick={handleMusicBtn}>
+												<i
+													id='musicSymbol'
+													className={
+														backgroundMusic.current.muted ? 'fas fa-music muted' : 'fas fa-music'
+													}
+												></i>
+											</div>
 										</div>
 										<LogoutButton setAuthenticated={setAuthenticated} />
 									</div>
