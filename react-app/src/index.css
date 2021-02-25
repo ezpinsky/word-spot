@@ -230,3 +230,12 @@ body {
 .darkHover2:hover {
 	color: rgb(245, 192, 124);
 }
+
+.noSelect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

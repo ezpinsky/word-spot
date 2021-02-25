@@ -67,12 +67,12 @@ export default function LandingPage({ authType, authenticated, setAuthenticated 
 					<div id='authForm'>
 						{authType === 'login' ? (
 							<>
-								<h1 className='lightFont authTitle'>Login</h1>
+								<h1 className='lightFont authTitle noSelect'>Login</h1>
 								<LoginForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
 							</>
 						) : (
 							<>
-								<h1 className='lightFont'>Sign Up</h1>
+								<h1 className='lightFont noSelect'>Sign Up</h1>
 								<SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
 							</>
 						)}

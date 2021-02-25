@@ -318,13 +318,13 @@ export default function LetterBoard({ setAuthenticated }) {
 															<div
 																data-location={[colNum, rowNum]}
 																key={[colNum, rowNum]}
-																className='letterContainer'
+																className='letterContainer noSelect'
 																value={letter}
 																id={[colNum, rowNum]}
 																onClick={handleLetterClick}
 															>
 																<div
-																	className='letter letterLightFont'
+																	className='letter letterLightFont noSelect'
 																	value={letter}
 																	key={[colNum, rowNum, 'letter']}
 																>
@@ -345,22 +345,22 @@ export default function LetterBoard({ setAuthenticated }) {
 										<>
 											<div id='btnSpacerDiv'>
 												<div
-													className='btn lightFont helpBtn darkHover'
+													className='btn lightFont helpBtn darkHover noSelect'
 													onClick={handleRotateBoardClick}
 												>
 													<i className='fas fa-sync-alt'></i>
 												</div>
 											</div>
 											<div id='btnSpacerDiv'>
-												<div className='btn lightFont helpBtn darkHover' onClick={handleHintClick}>
+												{/* <div className='btn lightFont helpBtn darkHover' onClick={handleHintClick}>
 													<i className='fas fa-question'></i>
-												</div>
+												</div> */}
 											</div>
 											<div id='selectedLettersContainer' className='lightBkgrnd'>
 												{spotLetters}
 											</div>
 											<div
-												className='btn lightFont spotWordBtn darkHover'
+												className='btn lightFont spotWordBtn darkHover noSelect'
 												onClick={handleWordSubmit}
 											>
 												Spot
@@ -377,7 +377,7 @@ export default function LetterBoard({ setAuthenticated }) {
 												autoComplete='off'
 											/>
 											<div
-												className='btn lightFont createBoardBtn'
+												className='btn lightFont createBoardBtn noSelect'
 												onClick={handleCreateBoardClick}
 											>
 												Create
@@ -391,7 +391,7 @@ export default function LetterBoard({ setAuthenticated }) {
 							<div id='profileContainer' className='darkFont'>
 								<div
 									id='username'
-									className='darkFont lightHover'
+									className='darkFont lightHover noSelect'
 									onClick={() =>
 										showProfileOptions ? setShowProfileOptions(false) : setShowProfileOptions(true)
 									}
@@ -409,7 +409,7 @@ export default function LetterBoard({ setAuthenticated }) {
 									onCanPlay={e => (e.target.volume = 0.2)}
 								></audio>
 								{showProfileOptions ? (
-									<div id='profileOptions' className='lightFont'>
+									<div id='profileOptions' className='lightFont noSelect'>
 										<div id='musicControlsContainer'>
 											<input
 												id='volumeControlSlide'
@@ -427,7 +427,9 @@ export default function LetterBoard({ setAuthenticated }) {
 												<i
 													id='musicSymbol'
 													className={
-														backgroundMusic.current.muted ? 'fas fa-music muted' : 'fas fa-music'
+														backgroundMusic.current.muted
+															? 'fas fa-music noSelect muted'
+															: 'fas fa-music noSelect'
 													}
 												></i>
 											</div>
@@ -440,7 +442,7 @@ export default function LetterBoard({ setAuthenticated }) {
 							</div>
 							<div id='rightSideBarBtnContainer'>
 								<div
-									className='btn lightFont rightSideBarBtn darkHover'
+									className='btn lightFont rightSideBarBtn darkHover noSelect'
 									onClick={handleNextBoardClick}
 								>
 									{newBoardInput ? <p id='exitBtn'>Exit</p> : <p>Next Board</p>}
@@ -449,7 +451,7 @@ export default function LetterBoard({ setAuthenticated }) {
 								</div>
 								{!newBoardInput && (
 									<div
-										className='btn lightFont rightSideBarBtn darkHover'
+										className='btn lightFont rightSideBarBtn darkHover noSelect'
 										onClick={handleCreateNewClick}
 									>
 										<p> Create New</p>
