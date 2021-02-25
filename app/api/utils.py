@@ -74,15 +74,15 @@ def find_suitable_orientation(letters):  # 'aaaa bbbb cccc dddd'
   grid = letters.split()  # ['fpie', 'amlo', 'ewbx', 'astu'] list of rows
   nrows, ncols = len(grid), len(grid[0])  # gets number of col and number of rows
 
-  # create string from letters for regex -- A dictionary word that could be a solution must use only the grid's letters
+# create string from letters for regex -- A dictionary word that could be a solution must use only the grid's letters
   prefix_letters = ''.join(set(''.join(grid)))
-  # regex object for words that will match our letters and have length >= 3.  -- re.I makes it case-insensitive
+# regex object for words that will match our letters and have length >= 3.  -- re.I makes it case-insensitive
   is_grid_word = re.compile('[' + prefix_letters + ']{3,}$', re.I).match
 
-  # gets all words in dictionary possible with the letters using regex -- rstrip removes sepcified trailing characters, in our case the new line in file
+# gets all words in dictionary possible with the letters using regex -- rstrip removes sepcified trailing characters, in our case the new line in file
   words = set(word.rstrip('\n') for word in open(f'{os.getcwd()}/app/api/words.txt') if is_grid_word(word))
 
-  # will speed up the word check by checking first for prefixes and then entire words -- gets all prefixes from our words
+# will speed up the word check by checking first for prefixes and then entire words -- gets all prefixes from our words
   prefixes = set(word[:i] for word in words
                  for i in range(2, len(word) + 1)
                  )
@@ -91,8 +91,7 @@ def find_suitable_orientation(letters):  # 'aaaa bbbb cccc dddd'
   for orientation, num_words, found_words, count in orientation_generator(letters, words, prefixes):
     if num_words > max[0]:
       max = num_words, orientation, found_words, count
-    if count >= 10000:  # Only allows to run for maximum of 10 seconds
-      print(count)
+    if count >= 10000 or (max[0] >= 85 and count >= 4000):  # Only allows to run for maximum of 10 seconds
       return max
 
 
