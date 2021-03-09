@@ -1,6 +1,6 @@
 # WordSpot
 
-WordSpot is a fast-paced word-finding game similar to boggle but with a powerful depth-first search algorithm used to generate new boards based in user input. Find as many words as you can by connecting adjacent letters in a 4 x 4 letter grid. See if you can beat your friend’s highscore!
+WordSpot is a fast-paced word-finding game similar to boggle but with a powerful depth-first search algorithm used to generate new boards based on user input. Find as many words as you can by connecting adjacent letters in a 4 x 4 letter grid. See if you can beat your friend’s highscore!
 
 ## MVP
 
