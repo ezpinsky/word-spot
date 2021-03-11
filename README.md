@@ -103,7 +103,7 @@ WordSpot is a fast-paced word-finding game similar to boggle but with a powerful
 
   <br />
 
-## Backend Routes
+## API Routes
 
 ### 1. Sessions
 
@@ -132,54 +132,6 @@ WordSpot is a fast-paced word-finding game similar to boggle but with a powerful
 - POST /api/challenges/ -- Creates a challenge
 - GET /api/challenges/:userId -- Gets all challenges
 - DELETE /api/challenges/:challengeId -- Deletes a challenge
-
----
-
-  <br />
-
-## Components
-
-### 1. SignUp
-
-### 2. Login
-
-### 3. Game
-
-### 4. LetterBoard
-
-### 5. LetterBoardColumn
-
-### 6. Letter
-
-### 7. Timer
-
-### 8. Settings
-
-- Music
-- SoundEffects
-- Timer
-- User Info Edit
-
-### 9. FriendsList
-
-### 10. Footer
-
-### 11. SideBar
-
-1. Highscores
-
-> - World highscores
-> - Friends highscores
-
-2. Friends
-
-> - Friends list
-> - Add a friend
-
-3. Challenges
-
-> - Sent challenges
-> - Received challenges
 
 ---
 
